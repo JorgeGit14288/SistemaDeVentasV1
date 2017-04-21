@@ -1,0 +1,149 @@
+﻿<!-- Left side column. contains the sidebar -->
+<aside class="main-sidebar bg-black">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <!-- Sidebar user panel 
+        <div class="user-panel">
+            <div class="pull-left image">
+                <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+            </div>
+            <div class="pull-left info">
+                <p>@ViewBag.Usuario</p>
+                <a href="#"><i class="fa fa-circle text-success"></i> Activo</a>
+            </div>
+
+        </div>
+            -->
+        <!-- search form -->
+        <form action="#" method="get" class="sidebar-form">
+            <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <span class="input-group-btn">
+                    <button type="submit" name="search" id="search-btn" class="btn btn-flat">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        <!-- /.search form -->
+        <!-- sidebar menu: : style can be found in sidebar.less -->
+        <ul class="sidebar-menu">
+            <li class="header">Menu de Opciones</li>
+            <li class="treeview">
+                <a href="@Url.Action("Index","Home")">
+                    <i class="fa fa-dashboard"></i> <span>Escritorio</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="@Url.Action("Facturar","Facturar")">
+                    <i class="fa fa-edit"></i> <span>Facturar</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="@Url.Action("Index","Detalles")">
+                    <i class="fa fa-edit"></i> <span>Detalles Temp</span>
+                </a>
+            </li>
+
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-table"></i>
+                    <span>Facturas</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right bg-green">
+                            <i class="fa fa-angle-down pull-right"></i>
+                        </span>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="@Url.Action("Index","Facturas")"><i class="fa fa-circle-o"></i>Lista de Facturas</a></li>
+                    <li><a href="@Url.Action("Busqueda","Facturas")"><i class="fa fa-circle-o"></i> Buscar Facturas</a></li>
+                    <li><a href="@Url.Action("FacturasHOy","Facturas")"><i class="fa fa-circle-o"></i>Facturas de hoy </a></li>
+                    <li><a href="@Url.Action("FacturasPorFecha","Facturas")"><i class="fa fa-circle-o"></i>Facturas por fecha</a></li>                   
+                </ul>
+            </li>
+
+
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-files-o"></i>
+                    <span>Productos</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right bg-green">
+                            <i class="fa fa-angle-down pull-right"></i>
+                            </span>
+                     </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="@Url.Action("Index","Productos")"><i class="fa fa-circle-o"></i> Productos Existentes</a></li>
+                    <li><a href="@Url.Action("Create","Productos")"><i class="fa fa-circle-o"></i> Registrar Nuevo</a></li>
+                    <li><a href="@Url.Action("AgregarExistencia","Productos")"><i class="fa fa-circle-o"></i>Agregar Existencia</a></li>                                                                                         
+                </ul>
+            </li>
+
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-book"></i>
+                    <span>Clientes</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right bg-green">
+                            <i class="fa fa-angle-down pull-right"></i>
+                        </span>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="@Url.Action("Index","Clientes")"><i class="fa fa-circle-o"></i>Clientes Registrados</a></li>
+                    <li><a href="@Url.Action("Create","Clientes")"><i class="fa fa-circle-o"></i>Registrar Nuevo</a></li>
+                   
+                    
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-edit"></i>
+                    <span>Usuarios</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right bg-green">
+                            <i class="fa fa-angle-down pull-right"></i>
+                        </span>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="@Url.Action("Index","Usuarios")"><i class="fa fa-circle-o"></i> Listado de usuarios</a></li>
+                    <li><a href="@Url.Action("Create","Usuarios")"><i class="fa fa-circle-o"></i> Perfil de usuario </a></li>
+
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="">
+                    <i class="fa fa-files-o"></i>
+                    <span>Reportes</span>
+                    <span class="pull-right-container">
+                        <span class="label label-primary pull-right bg-green">
+                            <i class="fa fa-angle-down pull-right"></i>
+                        </span>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="@Url.Action("Index","Reportes")"><i class="fa fa-circle-o"></i>Reportes Disponibles</a></li>
+                    <li><a href="@Url.Action("Busqueda","Reporte")"><i class="fa fa-circle-o"></i>Reportes Facturas del ria</a></li>
+
+                </ul>
+            </li>
+
+
+
+            
+           
+            
+            <li><a href="../../documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+            <li class="header">LABELS</li>
+            <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
+            <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+<!-- =============================================== -->

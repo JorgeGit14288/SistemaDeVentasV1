@@ -1,0 +1,55 @@
+﻿@model SistemaDeVentasV1.Models.Clientes
+
+@{
+    ViewBag.Title = "Eliminar Cliente";
+    ViewBag.TituloControlador = "CLIENTES";
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
+}
+
+<h3>Desea eliminar este cliente de la base de datos?</h3>
+<div>
+    <h4>Informacion del Cliente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nit)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar Cliente" class="btn btn-danger" /> |
+            @Html.ActionLink("REGRESAR A LA LISTA DE CLIENTES", "Index")
+        </div>
+    }
+</div>

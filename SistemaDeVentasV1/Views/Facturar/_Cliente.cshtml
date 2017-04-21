@@ -1,0 +1,57 @@
+﻿@using SistemaDeVentasV1.Models;
+@{ 
+    Clientes cliente = new Clientes();
+    if (Session["Cliente"].ToString() == "")
+    {
+        // ViewBag.ErrorCliente = "Ingrese los datos del cliente";
+        cliente = new Clientes();
+    }
+    else
+    {
+        cliente = (Clientes)Session["Cliente"];
+    }
+}
+ <form id="fBuscarCliente" action="BuscarCliente" method="post">
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="Nit">Nit:</label>
+        <div class="col-sm-8">
+            <input type="text" name="nitCliente" id="nitCliente" value="@cliente.nit" class="form-control" required />
+            <input type="submit" value="Buscar" id="btnBuscarCliente" formaction="BuscarCliente" class="btn btn-primary " />
+        </div>
+    </div>
+    
+</form>
+
+<form id="formClientes" method="post" class="form-horizontal" action="CargarCliente">
+    <input type="hidden" name="nitCliente" value="@cliente.nit" />
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="Nombre">Nombre:</label>
+        <div class="col-sm-8">
+            <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre del cliente" value="@cliente.nombre" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="Direccion">Direccion:</label>
+        <div class="col-sm-8">
+            <input type="text" name="Direccion" id="Direccion" class="form-control" placeholder="Direccion" value="@cliente.direccion" required />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="idFactura">No.Factura:</label>
+        <div class="col-sm-8">
+            <input type="number" name="idFactura" id="idFactura" value="@Session["idFactura"]" class="form-control" required readonly />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="pwd">Fecha:</label>
+        <div class="col-sm-8">
+            <input type="text" name="fecha" id="fecha" value="@DateTime.Now.Date" class="form-control" required readonly />
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <input type="submit" value="Cargar Cliente" id="CargarCliente" formaction="CargarCliente" class="btn btn-primary form-control" />
+        </div>
+    </div>
+</form>
+ 

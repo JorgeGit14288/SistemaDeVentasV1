@@ -1,0 +1,73 @@
+﻿@using SistemaDeVentasV1.Models;
+
+@{ 
+    List<Detalles> detalles = new List<Detalles>();
+    if (Session["Detalles"].ToString() == "")
+    {
+
+    }
+    else
+    {
+        detalles = (List<Detalles>)Session["Detalles"];
+    }
+}
+
+
+<div class="col-md-12">
+    <div class="table-responsive " >
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Id
+                    </th>
+
+                    <th>
+                        Cantidad
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Precio
+                    </th>
+                    <th>
+                        SubTotal
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in detalles)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.idDetalle)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cantidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.idProducto)
+                            @Html.DisplayFor(modelItem => item.Productos.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.precio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.subTotal)
+                        </td>
+
+
+                        <td>
+                            @Html.ActionLink("Editar", "EditarDetalle", new {  id=item.idDetalle  }) |
+                            @Html.ActionLink("Eliminar", "EliminarDetalle", new {  id=item.idDetalle  })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>

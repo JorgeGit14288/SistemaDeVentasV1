@@ -1,0 +1,120 @@
+﻿@model IEnumerable<SistemaDeVentasV1.Models.Clientes>
+
+@{
+    ViewBag.Title = "Clientes Registrados";
+    ViewBag.TituloControlador = "Clientes";
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
+}
+<p>
+    @Html.ActionLink("REGISTRAR NUEVO CLIENTE", "Create")
+</p>
+<table id="example1" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                Nit
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Direccion
+            </th>
+            <th>
+                Telefono
+            </th>
+            <th>Facturar</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.telefono)
+                </td>
+                <td>
+                   
+                    <form id="fCargarCliente" method="post" action="CargarProducto">
+                        <input type="hidden" name="nitCliente" id="nitCliente" value="@item.nit" />
+                        
+                        <input type="submit" value="Facturar" name="btnFacturar" formaction="../Facturar/CargarCliente" />
+                    </form>
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.nit }) |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.nit }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.nit })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#example1').DataTable({
+                "language": {
+
+                    "sProcessing": "Procesando...",
+
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+
+                    "sZeroRecords": "No se encontraron resultados",
+
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+
+                    "sInfoPostFix": "",
+
+                    "sSearch": "Buscar:",
+
+                    "sUrl": "",
+
+                    "sInfoThousands": ",",
+
+                    "sLoadingRecords": "Cargando...",
+
+                    "oPaginate": {
+
+                        "sFirst": "Primero",
+
+                        "sLast": "Último",
+
+                        "sNext": "Siguiente",
+
+                        "sPrevious": "Anterior"
+
+                    },
+
+                    "oAria": {
+
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+                    }
+
+                }
+            });
+        });
+    </script>
+
+
+}

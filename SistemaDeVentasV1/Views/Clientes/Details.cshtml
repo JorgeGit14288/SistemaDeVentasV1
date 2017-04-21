@@ -1,0 +1,50 @@
+﻿@model SistemaDeVentasV1.Models.Clientes
+
+@{
+    ViewBag.Title = "DETALLES DEL  Cliente";
+    ViewBag.TituloControlador = "CLIENTES";
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
+}
+
+
+<div>
+    <h4>Informacion del Cliente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nit)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar Informacion del Cliente", "Edit", new { id = Model.nit }) |
+    @Html.ActionLink("Regresar a la Lista de Clientes", "Index")
+</p>

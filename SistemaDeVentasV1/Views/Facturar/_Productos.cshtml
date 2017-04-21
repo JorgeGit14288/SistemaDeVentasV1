@@ -1,0 +1,76 @@
+﻿@using SistemaDeVentasV1.Models;
+@{
+    List<Productos> productos = new List<Productos>();
+
+    productos = (List<Productos>)ViewBag.Productos;
+}
+
+@{
+    if (ViewBag.modIdProducto == null)
+    {
+        <div class="col-md-12">
+            <form class="form-inline" id="formCargarProductos" method="post" action="AgregarProducto">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label class="col-sm-6" for="idProducto">Producto:</label>
+                        <input list="productos" name="idProducto" id="idProducto"  class="form-control col-sm-4" required />
+                        <datalist id="productos">
+                            @{
+                                foreach (var p in productos)
+                                {
+                                    <option value="@p.idProducto">@p.nombre @p.precio, @p.existencia </option>
+                                }
+                            }
+                        </datalist>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group ">
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="number" name="cantidad" id="cantidad" min="1"  max="9999" class=" form-control" required />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <br />
+                    <input type="submit" value="Agregar" id="btnAgregarProducto" formaction="~/Facturar/CargarProducto" class="btn btn-success" />
+                                                              
+                </div>
+            </form>
+        </div>
+           }
+         else
+         {
+                            <div class="col-md-12">
+                                <form class="form-inline" id="formCargarProductos" method="post" action="AgregarProducto">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label class="col-sm-6" for="idProducto">Producto:</label>
+                                            <input list="productos" name="idProducto" id="idProducto" value="@ViewBag.modIdProducto" class="form-control col-sm-4" required readonly />
+                                            <datalist id="productos">
+                                                @{
+                                                    foreach (var p in productos)
+                                                    {
+                                                        <option value="@p.idProducto">@p.nombre @p.precio, @p.existencia </option>
+                                                    }
+                                                }
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group ">
+                                            <label for="cantidad">Cantidad:</label>
+                                            <input type="number" name="cantidad" id="cantidad" min="1" value="@ViewBag.modCantidad" max="9999" class=" form-control" required  />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <br />
+                                        <input type="hidden" name="idDetalle" id="idDetalle" value="@ViewBag.modIdDetalle" />
+                                         <input type="submit" value="Modificar" id="btnAgregarProducto" formaction="~/Facturar/EditarDetalle" class="btn btn-success" />
+                                         <input type="submit" value="Cancelar" id="btnCancelarEdicion" formaction="~/Facturar/CancelarEdicion" class="btn btn-danger" />
+                                   
+                                    </div>
+                                </form>
+                            </div>
+
+                          }
+}

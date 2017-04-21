@@ -1,0 +1,133 @@
+﻿@model IEnumerable<SistemaDeVentasV1.Models.Facturas>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="example1" class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>
+                No.
+            </th>
+            <th>
+                Nit
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Direccion
+            </th>
+            <th>
+                Fecha
+            </th>
+            <th>
+                Total
+            </th>
+            <th>
+                Usuario
+            </th>
+            <th></th>
+     
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idFactura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nitCliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.total)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.usuario)
+                </td>
+                <td>
+                    <form id="fDetalles" action="Details" method="get">
+                        <input type="hidden" id="id" name="id" value="@item.idFactura" />
+                        <input type="submit" id="btnDetalles" value="Ver Detalles" formaction="Details" class="btn btn-success" />
+                    </form>
+                </td>
+               </tr>
+        }
+    </tbody>
+
+</table>
+
+@section scripts {
+    <script>
+            $(document).ready(function () {
+                $('#example1').DataTable({
+                    "language": {
+
+                        "sProcessing": "Procesando...",
+
+                        "sLengthMenu": "Mostrar _MENU_ registros",
+
+                        "sZeroRecords": "No se encontraron resultados",
+
+                        "sEmptyTable": "Ningún dato disponible en esta tabla",
+
+                        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+
+                        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+
+                        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+
+                        "sInfoPostFix": "",
+
+                        "sSearch": "Buscar:",
+
+                        "sUrl": "",
+
+                        "sInfoThousands": ",",
+
+                        "sLoadingRecords": "Cargando...",
+
+                        "oPaginate": {
+
+                            "sFirst": "Primero",
+
+                            "sLast": "Último",
+
+                            "sNext": "Siguiente",
+
+                            "sPrevious": "Anterior"
+
+                        },
+
+                        "oAria": {
+
+                            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+
+                            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+
+                        }
+
+                    }
+                });
+            });
+    </script>
+}

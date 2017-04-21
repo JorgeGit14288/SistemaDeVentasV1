@@ -1,0 +1,90 @@
+﻿@model SistemaDeVentasV1.Models.Facturar
+@using SistemaDeVentasV1.Models;
+
+@{
+    ViewBag.Title = "CREAR FACTURA";
+    ViewBag.TituloControlador = "Facturar";
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
+    ViewBag.idFactura = "1";
+    //Creamos los objetos a utlilizar en esta pagina
+    Facturas factura = new Facturas();
+}  
+ <div class="form-horizontal">
+     
+    <hr />
+    <div class=" row">
+        <div class="col-md-4">
+            <div class="panel panel-success">
+                 <div class="panel-heading"><center>DATOS DE LA FACTURA </center></div>
+                <div class="panel-body">
+                    @Html.Partial("_Cliente")
+                </div>
+                <div class="panel-footer">
+                    @{
+                        if (ViewBag.ErrorCliente == null)
+                        {
+
+                        }
+                        else
+                        {
+                            <div class="alert alert-warning alert-dismissable">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <center> @ViewBag.ErrorCliente </center>
+                            </div>
+                        }
+                    }
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="panel-group">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-success">
+                            <div class="panel-heading"><center>AGREGAR PRODUCTOS</center></div>
+                            <div class="panel-body">
+                                @Html.Partial("_Productos")
+                            </div>
+                            <div class="panel-footer">
+                                @{
+                                    if (ViewBag.ErrorProducto == null)
+                                    {
+
+                                    }
+                                    else
+                                    {
+                                        <div class="alert alert-warning alert-dismissable">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <center> <strong>¡Alerta!</strong> @ViewBag.ErrorProducto </center>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel-success">
+                             <div class="panel-heading"><center>DETALLES DE FACTURA</center></div>
+                            <div class="panel-body bg-gray-active">
+                                <div class="row">
+                                    @Html.Partial("_Detalles")
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                @Html.Partial("_TotalFactura")
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
