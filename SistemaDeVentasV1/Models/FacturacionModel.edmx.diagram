@@ -13,6 +13,12 @@
         <AssociationConnector Association="FacturacionDbModel.FK_Detalles_Facturas" ManuallyRouted="false" />
         <AssociationConnector Association="FacturacionDbModel.FK_Detalles_Productos" ManuallyRouted="false" />
         <AssociationConnector Association="FacturacionDbModel.FK_Facturas_Clientes" />
+        <EntityTypeShape EntityType="FacturacionDbModel.Compras" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="FacturacionDbModel.DetallesCompra" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="FacturacionDbModel.Proveedores" Width="1.5" PointX="0.75" PointY="9.125" />
+        <AssociationConnector Association="FacturacionDbModel.FK__Compras__idProve__1F98B2C1" />
+        <AssociationConnector Association="FacturacionDbModel.FK_DetallesCompra_Compras" />
+        <AssociationConnector Association="FacturacionDbModel.FK_DetallesCompra_Productos" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

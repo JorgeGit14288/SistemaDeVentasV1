@@ -24,6 +24,9 @@ namespace SistemaDeVentasV1.Models
         public string nombre { get; set; }
         public string direccion { get; set; }
         public string telefono { get; set; }
+        public Nullable<System.DateTime> creado { get; set; }
+        public Nullable<System.DateTime> modificado { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Facturas> Facturas { get; set; }

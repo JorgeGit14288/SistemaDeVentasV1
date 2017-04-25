@@ -194,12 +194,15 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ComprasController.cs" />
+    <Compile Include="Controllers\DetallesComprasController.cs" />
     <Compile Include="Controllers\DetallesController.cs" />
     <Compile Include="Controllers\FacturarController.cs" />
     <Compile Include="Controllers\FacturasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
+    <Compile Include="Controllers\ProveedoresController.cs" />
     <Compile Include="Dao\ClientesDao.cs" />
     <Compile Include="Dao\DetallesDao.cs" />
     <Compile Include="Dao\FacturarDao.cs" />
@@ -217,7 +220,13 @@
     <Compile Include="Models\Clientes.cs">
       <DependentUpon>FacturacionModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Compras.cs">
+      <DependentUpon>FacturacionModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Detalles.cs">
+      <DependentUpon>FacturacionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DetallesCompra.cs">
       <DependentUpon>FacturacionModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FacturacionModel.Context.cs">
@@ -242,6 +251,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Productos.cs">
+      <DependentUpon>FacturacionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Proveedores.cs">
       <DependentUpon>FacturacionModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_BuscarClienteNit_Result.cs">
@@ -1464,6 +1476,21 @@
     <Content Include="Views\Facturar\_TotalFactura.cshtml" />
     <Content Include="Views\Productos\AgregarExistencia.cshtml" />
     <Content Include="Views\Facturas\_DetallesFactura.cshtml" />
+    <Content Include="Views\Proveedores\Create.cshtml" />
+    <Content Include="Views\Proveedores\Delete.cshtml" />
+    <Content Include="Views\Proveedores\Details.cshtml" />
+    <Content Include="Views\Proveedores\Edit.cshtml" />
+    <Content Include="Views\Proveedores\Index.cshtml" />
+    <Content Include="Views\Compras\Create.cshtml" />
+    <Content Include="Views\Compras\Delete.cshtml" />
+    <Content Include="Views\Compras\Details.cshtml" />
+    <Content Include="Views\Compras\Edit.cshtml" />
+    <Content Include="Views\Compras\Index.cshtml" />
+    <Content Include="Views\DetallesCompras\Create.cshtml" />
+    <Content Include="Views\DetallesCompras\Delete.cshtml" />
+    <Content Include="Views\DetallesCompras\Details.cshtml" />
+    <Content Include="Views\DetallesCompras\Edit.cshtml" />
+    <Content Include="Views\DetallesCompras\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

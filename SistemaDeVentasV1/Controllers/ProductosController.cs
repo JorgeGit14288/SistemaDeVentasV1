@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using SistemaDeVentasV1.Models;
 using SistemaDeVentasV1.Dao;
+using System.IO;
 
 namespace SistemaDeVentasV1.Controllers
 {
@@ -48,8 +49,21 @@ namespace SistemaDeVentasV1.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idProducto,nombre,precio,existencia,observacion,imagen")] Productos productos)
+        public ActionResult Create([Bind(Include = "idProducto,nombre,precio,existencia,observacion, imagen")] Productos productos, HttpPostedFileBase imagenMunicipio, FormCollection form)
         {
+            //HttpPostedFileBase laImagen = Convert.toh form["imagenProducto"];
+
+            if (imagenMunicipio != null && imagenMunicipio.ContentLength > 0)
+            {
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(imagenMunicipio.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(imagenMunicipio.ContentLength);
+                }
+                //setear la imagen a la entidad que se creara
+                productos.imagen = imageData;
+            }
+
             if (ModelState.IsValid)
             {
                 db.Productos.Add(productos);
@@ -230,6 +244,11 @@ namespace SistemaDeVentasV1.Controllers
                 return RedirectToAction("Index");
             }
             return View(productos);
+        }
+        public ActionResult ConertirImagen(string idProducto)
+        {
+            var imagen = db.Productos.Where(p => p.idProducto == idProducto).FirstOrDefault();
+            return File(imagen.imagen, "image/jpeg");
         }
         protected override void Dispose(bool disposing)
         {

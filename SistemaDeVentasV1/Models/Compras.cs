@@ -12,26 +12,23 @@ namespace SistemaDeVentasV1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Productos
+    public partial class Compras
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Productos()
+        public Compras()
         {
-            this.Detalles = new HashSet<Detalles>();
             this.DetallesCompra = new HashSet<DetallesCompra>();
         }
     
-        public string idProducto { get; set; }
-        public string nombre { get; set; }
-        public decimal precio { get; set; }
-        public decimal existencia { get; set; }
-        public string observacion { get; set; }
-        public byte[] imagen { get; set; }
+        public int idCompra { get; set; }
+        public int idFactura { get; set; }
+        public string idProveedor { get; set; }
+        public Nullable<decimal> total { get; set; }
+        public System.DateTime fecha { get; set; }
         public Nullable<System.DateTime> creado { get; set; }
         public Nullable<System.DateTime> modificado { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Detalles> Detalles { get; set; }
+        public virtual Proveedores Proveedores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetallesCompra> DetallesCompra { get; set; }
     }

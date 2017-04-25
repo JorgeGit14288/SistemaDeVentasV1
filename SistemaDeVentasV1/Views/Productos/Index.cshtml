@@ -25,6 +25,9 @@
             <th>
                 Observaciones
             </th>
+            <th>
+                Imagen
+            </th>
            
             <th>Comprar</th>
             <th>Acciones</th>
@@ -71,6 +74,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.observacion)
+                </td>
+                <td>
+                   <img width="50" height="50" src="@Url.Action("ConvertirImagen","Productos", new {idProducto= item.idProducto})" />
                 </td>
          
                 <td>

@@ -5,7 +5,7 @@
     ViewBag.TituloControlador = "PRODUCTOS";
     Layout = "~/Views/Shared/Plantilla1.cshtml";
 }
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Productos", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
@@ -56,10 +56,15 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Imagen Actual", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.imagen, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.imagen, "", new { @class = "text-danger" })
+                <img width="280" height="250" src="@Url.Action("ConvertirImagen", "Productos", new {idProducto = Model.idProducto})" />
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Cambiar Imagen", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="imagenMunicipio" />
             </div>
         </div>
 
