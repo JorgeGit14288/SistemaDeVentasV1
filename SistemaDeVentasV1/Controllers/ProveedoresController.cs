@@ -48,13 +48,17 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "idProveedor,empresa,nombre,direccion,telefono,email,creado,modificado")] Proveedores proveedores)
         {
+      
             if (ModelState.IsValid)
             {
+                proveedores.creado = DateTime.Now;
+                proveedores.modificado = DateTime.Now;
                 db.Proveedores.Add(proveedores);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Mensaje = "Registro Creado";
+                return View("Index", db.Proveedores.ToList());
             }
-
+            ViewBag.Error = "No se pudo crear el registro en la base de datos";
             return View(proveedores);
         }
 
@@ -80,12 +84,16 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "idProveedor,empresa,nombre,direccion,telefono,email,creado,modificado")] Proveedores proveedores)
         {
+            
             if (ModelState.IsValid)
             {
+                proveedores.modificado = DateTime.Now;
                 db.Entry(proveedores).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Mensaje = "Registro Actualizado";
+                return View("Index", db.Proveedores.ToList());
             }
+            ViewBag.Error = "No se pudo actualizar los datos del proveedor";
             return View(proveedores);
         }
 
@@ -109,10 +117,21 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Proveedores proveedores = db.Proveedores.Find(id);
-            db.Proveedores.Remove(proveedores);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+
+
+                Proveedores proveedores = db.Proveedores.Find(id);
+                db.Proveedores.Remove(proveedores);
+                db.SaveChanges();
+                ViewBag.Mensaje = "Se ha eliminado un registro de la base de datos";
+                return View("Index", db.Proveedores.ToList());
+            }
+            catch
+            {
+                ViewBag.Error = "No se pudo elimianar el registro";
+                return View(id);
+            }
         }
 
         protected override void Dispose(bool disposing)

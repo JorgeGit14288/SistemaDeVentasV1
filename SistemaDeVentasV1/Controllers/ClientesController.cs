@@ -50,11 +50,14 @@ namespace SistemaDeVentasV1.Controllers
         {
             if (ModelState.IsValid)
             {
+                clientes.creado = DateTime.Now;
+                clientes.modificado = DateTime.Now;
                 db.Clientes.Add(clientes);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Mensaje = "Se ha creado un nuevo registro en la base de datos";
+                return View("Index",db.Clientes.ToList());
             }
-
+            ViewBag.Error = "No se ha podido crear el registro, puede que exista ya un cliente con este nit";
             return View(clientes);
         }
 
@@ -82,10 +85,13 @@ namespace SistemaDeVentasV1.Controllers
         {
             if (ModelState.IsValid)
             {
+                clientes.modificado = DateTime.Now;
                 db.Entry(clientes).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Mensaje = "Se ha actualizado el registro del cliente en la ase de datos";
+                return View(clientes.nit);
             }
+            ViewBag.Error="No se han podido guardar los cambios, si el problema persiste, contacte con el tecnico";
             return View(clientes);
         }
 
@@ -109,10 +115,19 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Clientes clientes = db.Clientes.Find(id);
-            db.Clientes.Remove(clientes);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Clientes clientes = db.Clientes.Find(id);
+                db.Clientes.Remove(clientes);
+                db.SaveChanges();
+                ViewBag.Mensaje = "Se ha eliminado un registro de la base de datos";
+                return View("Index", db.Clientes.ToList());
+            }
+            catch
+            {
+                ViewBag.Error = "No se pudo elimnar el registro, puede que la conexion a el servidor no este estable, o que el cliente tanga facturas a su nombre, contacte con el tecnico";
+                return View(id);
+            }
         }
 
         protected override void Dispose(bool disposing)

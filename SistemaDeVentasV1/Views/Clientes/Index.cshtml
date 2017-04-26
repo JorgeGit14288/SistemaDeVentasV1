@@ -3,10 +3,13 @@
 @{
     ViewBag.Title = "Clientes Registrados";
     ViewBag.TituloControlador = "Clientes";
+    ViewBag.InfoPagina = "Clientes Registrados en el sistema";
+    ViewBag.TituloVentana = "Listado de Clientes Registrados";
+    ViewBag.FooterVentana = "Para ver mas informacion sobre cada cliente, pulse en el boton detalles";
     Layout = "~/Views/Shared/Plantilla1.cshtml";
 }
 <p>
-    @Html.ActionLink("REGISTRAR NUEVO CLIENTE", "Create")
+    <a href="@Url.Action("Create","Clientes")" class="btn btn-primary" role="button">Registrar Nuevo Cliente</a>
 </p>
 <table id="example1" class="table table-bordered table-striped">
     <thead>
@@ -53,9 +56,7 @@
                     </form>
                 </td>
                 <td>
-                    @Html.ActionLink("Editar", "Edit", new { id = item.nit }) |
-                    @Html.ActionLink("Detalles", "Details", new { id = item.nit }) |
-                    @Html.ActionLink("Eliminar", "Delete", new { id = item.nit })
+                    <input type="button" class="btn btn-info" value="Ver Detalles" onclick="location.href='@Url.Action("Details", "Clientes", new {id = item.nit})'" /> 
                 </td>
             </tr>
         }
