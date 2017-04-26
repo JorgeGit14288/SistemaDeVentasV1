@@ -48,11 +48,12 @@ namespace SistemaDeVentasV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Facturas facturas = db.Facturas.Find(id);
+                Facturas facturas = db.Facturas.Find(id);
                 ViewBag.Detalles = db.Detalles.Where(r => r.idFactura == id).ToList();
             if (facturas == null)
             {
-                return HttpNotFound();
+                ViewBag.Error = "No se encuentra la factura que busca, intente buscar en la tabla general";
+                return View("Index",db.Facturas.ToList());
             }
             return View(facturas);
         }

@@ -1,7 +1,10 @@
 ﻿@model SistemaDeVentasV1.Models.Facturas
-
 @{
     ViewBag.Title = "Details";
+    ViewBag.TituloControlador = "Facturas";
+    ViewBag.InfoPagina = "Informacion de Facturas";
+    ViewBag.TituloVentana = "Datos de la venta y detalles de los productos";
+    ViewBag.FooterVentana = "No se pueden eliminar las facturas ni tampoco modificar, por integridad del sistema";
     Layout = "~/Views/Shared/Plantilla1.cshtml";
 }
 <div class="row">
@@ -19,7 +22,7 @@
                    <tbody>
                        <tr>
                            <td>
-                               @Html.DisplayNameFor(model => model.nitCliente)
+                             <strong>Nit:</strong>
                            </td>
 
                            <td>
@@ -29,7 +32,7 @@
                        </tr>
                        <tr>
                            <td>
-                               @Html.DisplayNameFor(model => model.nombre)
+                               <strong>Nombre:</strong>
                            </td>
 
                            <td>
@@ -38,7 +41,7 @@
                        </tr>
                    <tr>
                        <td>
-                           @Html.DisplayNameFor(model => model.direccion)
+                           <strong>Direccion:</strong>
                        </td>
 
                        <td>
@@ -47,7 +50,7 @@
                    </tr>
                        <tr>
                            <td>
-                               @Html.DisplayNameFor(model => model.fecha)
+                               <strong>Fecha:</strong>
                            </td>
 
                            <td>
@@ -59,11 +62,11 @@
                        <tr>
 
                            <td>
-                               @Html.DisplayNameFor(model => model.total)
+                               <strong>Total :</strong>
                            </td>
 
                            <td>
-                               @Html.DisplayFor(model => model.total)
+                              Q. @Html.DisplayFor(model => model.total)
                            </td>
 
 
@@ -71,7 +74,7 @@
                        <tr>
 
                            <td>
-                               @Html.DisplayNameFor(model => model.usuario)
+                               <strong>Usuario:</strong>
                            </td>
 
                            <td>
@@ -98,11 +101,28 @@
             </div>
             @Html.Partial("_DetallesFactura")
         </div>
+        <div class="row">
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-8">
+                <div class="col-md-4">
+                    <label>Total Cobrado</label>
+                </div>
+                <div class="col-md-4 bg-red-active">
+                    Q. @Html.DisplayFor(model => model.total)
+                </div>
+                
+            </div>
+           
+        </div>
+
     </div>
 </div>
 <div class="row">
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.idFactura }) |
-        @Html.ActionLink("Back to List", "Index")
+        <input type="button" disabled class="btn btn-info" value="Actualizar Registro" onclick="location.href='@Url.Action("Edit", "Facturas", new {id = Model.idFactura })'" /> |
+        <input type="button" disabled class="btn btn-danger" value="Eliminar Registro" onclick="location.href='@Url.Action("Delete", "Facturas", new {id = Model.idFactura })'" /> |
+        <a href="@Url.Action("Index","Facturas")" class="btn btn-success">Regresar a la lista</a>
     </p>
 </div>

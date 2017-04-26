@@ -66,11 +66,14 @@ namespace SistemaDeVentasV1.Controllers
 
             if (ModelState.IsValid)
             {
+                productos.creado = DateTime.Now;
+                productos.modificado = DateTime.Now;
                 db.Productos.Add(productos);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Mensaje = "Se ha registrado un nuevo producto";
+                return View("Index" , db.Productos.ToList());
             }
-
+            ViewBag.Error = "No se ha podido registrar el producto, verifique que no exista ya uno similar o con el mismo id, de lo contrario contacte con el tecnico";
             return View(productos);
         }
 
@@ -98,10 +101,13 @@ namespace SistemaDeVentasV1.Controllers
         {
             if (ModelState.IsValid)
             {
+                productos.modificado = DateTime.Now;
                 db.Entry(productos).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                ViewBag.Mensaje = "Se ha actualizado el producto con exito";
+                return View(productos.idProducto);
             }
+            ViewBag.Error = "No se ha podido modificar el producto, compruebe que los nuevos datos son validos, si el problema persiste, contacte al tecnico";
             return View(productos);
         }
 
@@ -125,10 +131,19 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Productos productos = db.Productos.Find(id);
-            db.Productos.Remove(productos);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                Productos productos = db.Productos.Find(id);
+                db.Productos.Remove(productos);
+                db.SaveChanges();
+                ViewBag.Mensaje = "Se ha eliminado un registro de la base de datos";
+                return View("Index", db.Productos.ToList());
+            }
+            catch
+            {
+                ViewBag.Error = "No se ha podido eliminar el registro de la base de datos, compruebe que este no este en el detalle de alguna factura, si el problema persiste contacte al tecnico";
+                return View(id);
+            }
         }
         [HttpPost]
         public ActionResult CargarProducto(FormCollection form)

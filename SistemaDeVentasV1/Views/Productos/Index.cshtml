@@ -2,10 +2,14 @@
 @{
     ViewBag.Title = "Productos Registrados";
     ViewBag.TituloControlador = "PRODUCTOS";
+    ViewBag.InfoPagina = "Stock de productos registrados en el sistema";
+    ViewBag.TituloVentana = "Listado de productos registrados";
+    ViewBag.FooterVentana = "Puede ver los detalles de cada producto pulsando en el boton detalles";
+
     Layout = "~/Views/Shared/Plantilla1.cshtml";
 }
 <p>
-    @Html.ActionLink("REGISTRAR NUEVO PRODUCTO", "Create")
+    <a href="@Url.Action("Create","Productos")" class="btn btn-primary" role="button">Crear Nuevo</a>
 <table id="example1" class="table table-bordered table-striped">
     <thead>
         <tr>
@@ -21,13 +25,6 @@
             <th>
                 Existencia
             </th>
-            <th>
-                Observaciones
-            </th>
-            <th>
-                Imagen
-            </th>
-           
             <th>Comprar</th>
             <th>Acciones</th>
         </tr>
@@ -64,20 +61,13 @@
                         }
                         if(item.existencia>=6)
                         {
-                            <div class="bg-green-active">
+                            
 
                                 @Html.DisplayFor(modelItem => item.existencia)
-                            </div>
+                        
                         }
                     }   
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.observacion)
-                </td>
-                <td>
-                   <img width="50" height="50" src="@Url.Action("ConvertirImagen","Productos", new {idProducto= item.idProducto})" />
-                </td>
-         
+                </td>         
                 <td>
                     @{
                         if (item.existencia == 0)
@@ -91,7 +81,7 @@
                         {
                             <form id="fCargarProducto" method="post" action="CargarProducto">
                                 <input type="hidden" name="idProducto" id="idProducto" value="@item.idProducto" />
-                                <input type="number" min="1" max="999" name="cantidad" id="cantidad" required />
+                                <input type="number" size="6" min="1" max="999" name="cantidad" id="cantidad" required />
                                 <input type="submit" value="Comprar" name="btnComprar" class="btn btn-success" formaction="CargarProducto" />
                             </form>
                         }
@@ -102,7 +92,7 @@
                     <form id="fDetalles" method="get" action="Details">
                         <input type="hidden" name="id" id="id" value="@item.idProducto" />
                         
-                        <input type="submit" value="Ver Detalles" name="btnDetalles" class="btn btn-primary"  />
+                        <input type="submit" value="Ver Detalles" name="btnDetalles" class="btn btn-info"  />
                     </form>                   
                 </td>
             </tr>
