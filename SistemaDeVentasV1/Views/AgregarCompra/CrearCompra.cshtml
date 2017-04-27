@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Ingresar Compra";
+    ViewBag.TituloControlador = "COMPRAS";
+    ViewBag.InfoPagina = "Ingreso de mercaderia al inventario de el sistema";
+    ViewBag.TituloVentana = "Formulario de Ingreso";
+    ViewBag.FooterVentana = "Toda la informacion es Requerida";
+    Layout = "~/Views/Shared/Plantilla2.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <form action="BuscarProveedor" method="post" class="form-inline">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <center><h3 class="box-title"> Registro de proveedor</h3> </center>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        @Html.Partial("_Proveedores")
+                    </div>
+                    <div class="box-footer">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-5">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <center><h3 class="box-title">Agregar Producto</h3> </center>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    @Html.Partial("_Productos")
+                </div>
+                <div class="box-footer">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <center><h3 class="box-title">Detales de producto a agregar</h3> </center>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    @Html.Partial("_Detalles")
+                </div>
+                <div class="box-footer">
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+

@@ -1508,10 +1508,14 @@
     <Content Include="Views\Categorias\Details.cshtml" />
     <Content Include="Views\Categorias\Edit.cshtml" />
     <Content Include="Views\Categorias\Index.cshtml" />
+    <Content Include="Views\AgregarCompra\CrearCompra.cshtml" />
+    <Content Include="Views\AgregarCompra\_Detalles.cshtml" />
+    <Content Include="Views\AgregarCompra\_Proveedores.cshtml" />
+    <Content Include="Views\AgregarCompra\_Productos.cshtml" />
+    <Content Include="Views\Shared\Plantilla2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\AgregarCompra\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

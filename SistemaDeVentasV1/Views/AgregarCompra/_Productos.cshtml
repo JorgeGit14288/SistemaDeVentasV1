@@ -1,0 +1,92 @@
+﻿@using SistemaDeVentasV1.Models;
+@{
+    List<Productos> productos = new List<Productos>();
+    if (ViewBag.Productos == null)
+    {
+        // si la lista viene en blanco, no la llenamos
+    }
+    else
+    {
+        productos = (List<Productos>)ViewBag.Productos;
+
+    }
+    Productos prod = new Productos();
+    prod.idProducto = "2";
+    prod.nombre = "Prueba";
+    ViewBag.Prod = prod;
+
+    if (ViewBag.Prod == null)
+    {
+
+    }
+    else
+    {
+        prod = (Productos)ViewBag.Prod;
+    }
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <form id="fBuscarProducto" method="post" action="BuscarProducto" class="form-inline">
+            <label> Producto:</label>
+            <input list="productos" name="idProducto" id="idProducto" class="form-control" required />
+            <datalist id="productos">
+                @{
+                    foreach (var p in productos)
+                    {
+                        <option value="@p.idProducto"> Id: @p.idProducto, Nombre: @p.nombre </option>
+                    }
+                }
+            </datalist>
+            <input type="submit" value="Buscar" class="btn btn-info" />
+        </form>
+    </div>
+</div>
+@{
+    if (ViewBag.Prod == null)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <form action="CrearProducto" id="fCrearProducto" method="post" class="form-horizontal">
+                    Id: <input type="text" name="idProducto" id="idProducto" class="form-control input-sm" required />
+                    Nombre: <input type="text" name="nombre" id="nombre" class="form-control input-sm" required />
+                    Categoria: <input type="text" name="idCategoria" id="idCategoria" class="form-control input-sm" required />
+                    Observaciones: <input type="text" name="observacion" id="observacion" class="form-control input-sm" required />
+                    <input type="submit" class="btn btn-primary" value="Crear Nuevo" />
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <form id="fCargarProducto" method="post" action="CargarProducto" class="form-inline">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> </th>
+                                <th>Actual</th>
+                                <th>Agregar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Id</td>
+                                <td>@prod.idProducto</td>
+                                <td><input type="text" name="idProducto" id="idProducto" class="form-control input-sm" required /></td>
+                            </tr>
+                            <tr>
+                                <td>Id</td>
+                                <td>@prod.idProducto</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+        </div>
+    }
+}
+
