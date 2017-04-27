@@ -41,6 +41,7 @@ namespace SistemaDeVentasV1.Controllers
         // GET: Productos/Create
         public ActionResult Create()
         {
+            ViewBag.idCategoria = new SelectList(db.Categorias, "idCategoria", "nombre");
             return View();
         }
 
@@ -73,6 +74,7 @@ namespace SistemaDeVentasV1.Controllers
                 ViewBag.Mensaje = "Se ha registrado un nuevo producto";
                 return View("Index" , db.Productos.ToList());
             }
+            ViewBag.idCategoria = new SelectList(db.Categorias, "idCategoria", "nombre");
             ViewBag.Error = "No se ha podido registrar el producto, verifique que no exista ya uno similar o con el mismo id, de lo contrario contacte con el tecnico";
             return View(productos);
         }
@@ -84,6 +86,7 @@ namespace SistemaDeVentasV1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            ViewBag.idCategoria = new SelectList(db.Categorias, "idCategoria", "nombre");
             Productos productos = db.Productos.Find(id);
             if (productos == null)
             {
@@ -105,8 +108,9 @@ namespace SistemaDeVentasV1.Controllers
                 db.Entry(productos).State = EntityState.Modified;
                 db.SaveChanges();
                 ViewBag.Mensaje = "Se ha actualizado el producto con exito";
-                return View(productos.idProducto);
+                return View(productos);
             }
+            ViewBag.idCategoria = new SelectList(db.Categorias, "idCategoria", "nombre");
             ViewBag.Error = "No se ha podido modificar el producto, compruebe que los nuevos datos son validos, si el problema persiste, contacte al tecnico";
             return View(productos);
         }

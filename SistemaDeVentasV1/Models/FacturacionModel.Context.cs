@@ -35,6 +35,7 @@ namespace SistemaDeVentasV1.Models
         public virtual DbSet<Compras> Compras { get; set; }
         public virtual DbSet<DetallesCompra> DetallesCompra { get; set; }
         public virtual DbSet<Proveedores> Proveedores { get; set; }
+        public virtual DbSet<Categorias> Categorias { get; set; }
     
         public virtual int sp_ActualizarCliente(string nit, string nombre, string direccion, string telefono)
         {

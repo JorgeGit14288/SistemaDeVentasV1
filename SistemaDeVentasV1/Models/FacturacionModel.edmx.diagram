@@ -19,6 +19,8 @@
         <AssociationConnector Association="FacturacionDbModel.FK__Compras__idProve__1F98B2C1" />
         <AssociationConnector Association="FacturacionDbModel.FK_DetallesCompra_Compras" />
         <AssociationConnector Association="FacturacionDbModel.FK_DetallesCompra_Productos" />
+        <EntityTypeShape EntityType="FacturacionDbModel.Categorias" Width="1.5" PointX="0.75" PointY="13.875" />
+        <AssociationConnector Association="FacturacionDbModel.FK_Productos_Categorias" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

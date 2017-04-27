@@ -15,9 +15,10 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <div class="col-md-6">
+                <div class="col-md-7">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.idProducto)
+                  
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.idProducto, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -26,12 +27,26 @@
                             @Html.ValidationMessageFor(model => model.idProducto, "", new { @class = "text-danger" })
                         </div>
                     </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.idCategoria, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.idCategoria, new { htmlAttributes = new { @class = "form-control", @readonly = "true" } })
+                            @Html.ValidationMessageFor(model => model.idCategoria, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.nombre, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
                             @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.precioCompra, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.precioCompra, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                            @Html.ValidationMessageFor(model => model.precioCompra, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -60,7 +75,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <div class="form-group">
                         @Html.Label("Imagen Actual", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">

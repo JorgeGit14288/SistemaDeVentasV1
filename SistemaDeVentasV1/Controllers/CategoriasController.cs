@@ -10,121 +10,107 @@ using SistemaDeVentasV1.Models;
 
 namespace SistemaDeVentasV1.Controllers
 {
-    public class ComprasController : Controller
+    public class CategoriasController : Controller
     {
         private FacturacionDbEntities db = new FacturacionDbEntities();
 
-        // GET: Compras
+        // GET: Categorias
         public ActionResult Index()
         {
-            var compras = db.Compras.Include(c => c.Proveedores);
-            return View(compras.ToList());
+            return View(db.Categorias.ToList());
         }
 
-        // GET: Compras/Details/5
+        // GET: Categorias/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Compras compras = db.Compras.Find(id);
-            //var detallesCompra = db.DetallesCompra.Include(d => d.Compras).Include(d => d.Productos);
-            ViewBag.Detalles = db.DetallesCompra.Where(d => d.idCompra == id).ToList();
-            if (compras == null)
+            Categorias categorias = db.Categorias.Find(id);
+            if (categorias == null)
             {
-
-                var compras2 = db.Compras.Include(c => c.Proveedores);
-                ViewBag.Error = "No se ha encontrado la compra con el id indicado, pruebe buscar en la tabla general";
-                return View("Index",compras2.ToList());
+                return HttpNotFound();
             }
-
-            return View(compras);
+            return View(categorias);
         }
 
-        // GET: Compras/Create
+        // GET: Categorias/Create
         public ActionResult Create()
         {
-            ViewBag.idProveedor = new SelectList(db.Proveedores, "idProveedor", "empresa");
             return View();
         }
 
-        // POST: Compras/Create
+        // POST: Categorias/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idCompra,idFactura,idProveedor,total,fecha,creado,modificado")] Compras compras)
+        public ActionResult Create([Bind(Include = "idCategoria,nombre,descripcion")] Categorias categorias)
         {
             if (ModelState.IsValid)
             {
-                //compras.creado = DateTime.Now;
-                compras.modificado = DateTime.Now;
-                db.Compras.Add(compras);
+                db.Categorias.Add(categorias);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.idProveedor = new SelectList(db.Proveedores, "idProveedor", "empresa", compras.idProveedor);
-            return View(compras);
+            return View(categorias);
         }
 
-        // GET: Compras/Edit/5
+        // GET: Categorias/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Compras compras = db.Compras.Find(id);
-            if (compras == null)
+            Categorias categorias = db.Categorias.Find(id);
+            if (categorias == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.idProveedor = new SelectList(db.Proveedores, "idProveedor", "empresa", compras.idProveedor);
-            return View(compras);
+            return View(categorias);
         }
 
-        // POST: Compras/Edit/5
+        // POST: Categorias/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idCompra,idFactura,idProveedor,total,fecha,creado,modificado")] Compras compras)
+        public ActionResult Edit([Bind(Include = "idCategoria,nombre,descripcion")] Categorias categorias)
         {
             if (ModelState.IsValid)
             {
-                compras.modificado = DateTime.Now;
-                db.Entry(compras).State = EntityState.Modified;
+                db.Entry(categorias).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.idProveedor = new SelectList(db.Proveedores, "idProveedor", "empresa", compras.idProveedor);
-            return View(compras);
+            return View(categorias);
         }
 
-        // GET: Compras/Delete/5
+        // GET: Categorias/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Compras compras = db.Compras.Find(id);
-            if (compras == null)
+            Categorias categorias = db.Categorias.Find(id);
+            if (categorias == null)
             {
                 return HttpNotFound();
             }
-            return View(compras);
+            return View(categorias);
         }
 
-        // POST: Compras/Delete/5
+        // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Compras compras = db.Compras.Find(id);
-            db.Compras.Remove(compras);
+            Categorias categorias = db.Categorias.Find(id);
+            db.Categorias.Remove(categorias);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -63,7 +63,7 @@ namespace SistemaDeVentasV1.Dao
                             // Descontamos de la entidad producto cada venta.. para que el inventario baje
                             Productos producto = new Productos();
                             producto = ctx2.Productos.Find(d.idProducto);
-                            decimal existencia = producto.existencia;
+                            decimal existencia = Convert.ToDecimal(producto.existencia);
                             decimal cantidadActual = existencia - d.cantidad;
                             producto.existencia = cantidadActual;
                             //ctx2.Entry(producto).State = EntityState.Modified;

@@ -5,6 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="FacturacionDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="descripcion" Type="varchar" MaxLength="300" />
+        </EntityType>
         <EntityType Name="Clientes">
           <Key>
             <PropertyRef Name="nit" />
@@ -13,9 +21,9 @@
           <Property Name="nombre" Type="varchar" MaxLength="70" Nullable="false" />
           <Property Name="direccion" Type="varchar" MaxLength="70" Nullable="false" />
           <Property Name="telefono" Type="varchar" MaxLength="15" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
           <Property Name="creado" Type="datetime" />
           <Property Name="modificado" Type="datetime" />
-          <Property Name="email" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Compras">
           <Key>
@@ -26,8 +34,8 @@
           <Property Name="idProveedor" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="total" Type="decimal" Precision="10" Scale="2" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
-          <Property Name="creado" Type="datetime" />
           <Property Name="modificado" Type="datetime" />
+          <Property Name="usuario" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Detalles">
           <Key>
@@ -72,9 +80,11 @@
           </Key>
           <Property Name="idProducto" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="precioCompra" Type="decimal" Precision="10" Scale="2" />
           <Property Name="precio" Type="decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="existencia" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="existencia" Type="decimal" Precision="9" Scale="2" />
           <Property Name="observacion" Type="varchar" MaxLength="200" />
+          <Property Name="idCategoria" Type="int" />
           <Property Name="imagen" Type="image" />
           <Property Name="creado" Type="datetime" />
           <Property Name="modificado" Type="datetime" />
@@ -169,6 +179,18 @@
             </Principal>
             <Dependent Role="Facturas">
               <PropertyRef Name="nitCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Productos_Categorias">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="0..1" />
+          <End Role="Productos" Type="Self.Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="idCategoria" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -323,6 +345,7 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="FacturacionDbModelStoreContainer">
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Compras" EntityType="Self.Compras" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Detalles" EntityType="Self.Detalles" Schema="dbo" store:Type="Tables" />
@@ -354,6 +377,10 @@
           <AssociationSet Name="FK_Facturas_Clientes" Association="Self.FK_Facturas_Clientes">
             <End Role="Clientes" EntitySet="Clientes" />
             <End Role="Facturas" EntitySet="Facturas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Productos_Categorias" Association="Self.FK_Productos_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -408,13 +435,16 @@
           <Property Name="idProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="precio" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="existencia" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="existencia" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="observacion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Detalles" Relationship="Self.FK_Detalles_Productos" FromRole="Productos" ToRole="Detalles" />
           <Property Name="creado" Type="DateTime" Precision="3" />
           <Property Name="modificado" Type="DateTime" Precision="3" />
           <NavigationProperty Name="DetallesCompra" Relationship="FacturacionDbModel.FK_DetallesCompra_Productos" FromRole="Productos" ToRole="DetallesCompra" />
+          <Property Name="precioCompra" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="idCategoria" Type="Int32" />
+          <NavigationProperty Name="Categorias" Relationship="FacturacionDbModel.FK_Productos_Categorias" FromRole="Productos" ToRole="Categorias" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -626,6 +656,11 @@
             <End Role="Productos" EntitySet="Productos" />
             <End Role="DetallesCompra" EntitySet="DetallesCompra" />
           </AssociationSet>
+          <EntitySet Name="Categorias" EntityType="FacturacionDbModel.Categorias" />
+          <AssociationSet Name="FK_Productos_Categorias" Association="FacturacionDbModel.FK_Productos_Categorias">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productos" EntitySet="Productos" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_BuscarClienteNit_Result">
           <Property Type="String" Name="nit" Nullable="false" MaxLength="50" />
@@ -741,10 +776,10 @@
           <Property Name="idProveedor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="total" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="creado" Type="DateTime" Precision="3" />
           <Property Name="modificado" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Proveedores" Relationship="FacturacionDbModel.FK__Compras__idProve__1F98B2C1" FromRole="Compras" ToRole="Proveedores" />
           <NavigationProperty Name="DetallesCompra" Relationship="FacturacionDbModel.FK_DetallesCompra_Compras" FromRole="Compras" ToRole="DetallesCompra" />
+          <Property Name="usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DetallesCompra">
           <Key>
@@ -811,6 +846,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="idCategoria" />
+          </Key>
+          <Property Name="idCategoria" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Productos" Relationship="FacturacionDbModel.FK_Productos_Categorias" FromRole="Categorias" ToRole="Productos" />
+        </EntityType>
+        <Association Name="FK_Productos_Categorias">
+          <End Type="FacturacionDbModel.Categorias" Role="Categorias" Multiplicity="0..1" />
+          <End Type="FacturacionDbModel.Productos" Role="Productos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="idCategoria" />
+            </Principal>
+            <Dependent Role="Productos">
+              <PropertyRef Name="idCategoria" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -858,6 +914,8 @@
           <EntitySetMapping Name="Productos">
             <EntityTypeMapping TypeName="FacturacionDbModel.Productos">
               <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
+                <ScalarProperty Name="precioCompra" ColumnName="precioCompra" />
                 <ScalarProperty Name="modificado" ColumnName="modificado" />
                 <ScalarProperty Name="creado" ColumnName="creado" />
                 <ScalarProperty Name="idProducto" ColumnName="idProducto" />
@@ -1049,8 +1107,8 @@
           <EntitySetMapping Name="Compras">
             <EntityTypeMapping TypeName="FacturacionDbModel.Compras">
               <MappingFragment StoreEntitySet="Compras">
+                <ScalarProperty Name="usuario" ColumnName="usuario" />
                 <ScalarProperty Name="modificado" ColumnName="modificado" />
-                <ScalarProperty Name="creado" ColumnName="creado" />
                 <ScalarProperty Name="fecha" ColumnName="fecha" />
                 <ScalarProperty Name="total" ColumnName="total" />
                 <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
@@ -1083,6 +1141,15 @@
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="empresa" ColumnName="empresa" />
                 <ScalarProperty Name="idProveedor" ColumnName="idProveedor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="FacturacionDbModel.Categorias">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -20,13 +20,26 @@
             @Html.DisplayFor(model => model.idProducto)
         </dd>
         <dt>
+            @Html.DisplayNameFor(model => model.idCategoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categorias.nombre)
+        </dd>
+        <dt>
             @Html.DisplayNameFor(model => model.nombre)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.nombre)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.precioCompra)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.precioCompra)
+        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.precio)
         </dt>
