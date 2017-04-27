@@ -29,10 +29,16 @@ namespace SistemaDeVentasV1.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Compras compras = db.Compras.Find(id);
+            //var detallesCompra = db.DetallesCompra.Include(d => d.Compras).Include(d => d.Productos);
+            ViewBag.Detalles = db.DetallesCompra.Where(d => d.idCompra == id).ToList();
             if (compras == null)
             {
-                return HttpNotFound();
+
+                var compras2 = db.Compras.Include(c => c.Proveedores);
+                ViewBag.Error = "No se ha encontrado la compra con el id indicado, pruebe buscar en la tabla general";
+                return View("Index",compras2.ToList());
             }
+
             return View(compras);
         }
 
@@ -52,6 +58,8 @@ namespace SistemaDeVentasV1.Controllers
         {
             if (ModelState.IsValid)
             {
+                compras.creado = DateTime.Now;
+                compras.modificado = DateTime.Now;
                 db.Compras.Add(compras);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -86,6 +94,7 @@ namespace SistemaDeVentasV1.Controllers
         {
             if (ModelState.IsValid)
             {
+                compras.modificado = DateTime.Now;
                 db.Entry(compras).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

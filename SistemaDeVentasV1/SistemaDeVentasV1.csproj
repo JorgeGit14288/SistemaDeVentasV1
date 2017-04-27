@@ -1492,6 +1492,7 @@
     <Content Include="Views\DetallesCompras\Edit.cshtml" />
     <Content Include="Views\DetallesCompras\Index.cshtml" />
     <Content Include="Views\Shared\_MsjError.cshtml" />
+    <Content Include="Views\Compras\_Detalles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
