@@ -21,6 +21,7 @@ namespace SistemaDeVentasV1.Models
         public Nullable<decimal> precio { get; set; }
         public Nullable<decimal> subTotal { get; set; }
         public string observaciones { get; set; }
+        public Nullable<decimal> precioVenta { get; set; }
     
         public virtual Compras Compras { get; set; }
         public virtual Productos Productos { get; set; }

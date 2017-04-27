@@ -193,6 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AgregarCompraController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ComprasController.cs" />
@@ -204,11 +205,15 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductosController.cs" />
     <Compile Include="Controllers\ProveedoresController.cs" />
+    <Compile Include="Dao\AgregarComprasDao.cs" />
     <Compile Include="Dao\ClientesDao.cs" />
+    <Compile Include="Dao\ComprasDao.cs" />
     <Compile Include="Dao\DetallesDao.cs" />
     <Compile Include="Dao\FacturarDao.cs" />
     <Compile Include="Dao\FacturasDao.cs" />
+    <Compile Include="Dao\IAgregarComprasDao.cs" />
     <Compile Include="Dao\IClientesDao.cs" />
+    <Compile Include="Dao\IComprasDao.cs" />
     <Compile Include="Dao\IDetallesDao.cs" />
     <Compile Include="Dao\IFacturarDao.cs" />
     <Compile Include="Dao\IFacturasDao.cs" />
@@ -254,6 +259,7 @@
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\mCompras.cs" />
     <Compile Include="Models\Productos.cs">
       <DependentUpon>FacturacionModel.tt</DependentUpon>
     </Compile>
@@ -1505,6 +1511,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\AgregarCompra\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

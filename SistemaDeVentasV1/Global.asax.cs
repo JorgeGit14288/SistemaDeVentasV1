@@ -21,11 +21,21 @@ namespace SistemaDeVentasV1
         {
             Session["Factura"] = "";
             Session["Cliente"] = "";
-            Session["idFactura"] = "0";
+            Session["idFactura"] = "1";
             Session["Detalles"] = "";
             Session["idDetalle"] = "0";
             Session["Usuario"] = "";
             Session["totalFactura"] = "0";
+
+            //PARA COMPRAS
+            Session["Comprar"] = "";
+            Session["Compra"] = "";
+            Session["detCompra"] = "";
+            Session["totalCompra"] = "";
+            Session["idCompra"] = "1";
+            Session["idDetalleC"] = "0";
+            Session["Proveedor"] = "";
+
         }
     }
 }

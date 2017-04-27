@@ -27,6 +27,8 @@ namespace SistemaDeVentasV1.Models
         public System.DateTime fecha { get; set; }
         public Nullable<decimal> total { get; set; }
         public string usuario { get; set; }
+        public Nullable<decimal> subTotal { get; set; }
+        public Nullable<decimal> descuento { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Detalles> Detalles { get; set; }

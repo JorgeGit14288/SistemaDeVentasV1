@@ -14,7 +14,6 @@ namespace SistemaDeVentasV1.Dao
         FacturacionDbEntities ctx = new FacturacionDbEntities();
         public bool CrearVenta(Facturar datos)
         {
-            bool succes = false;
             using (TransactionScope scope = new TransactionScope())
             {
                 try
@@ -72,8 +71,6 @@ namespace SistemaDeVentasV1.Dao
                         scope.Complete();
                         return true;
                     }
-                    
-
                 }
                 catch(Exception ex)
                 {
