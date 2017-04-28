@@ -1513,6 +1513,7 @@
     <Content Include="Views\AgregarCompra\_Proveedores.cshtml" />
     <Content Include="Views\AgregarCompra\_Productos.cshtml" />
     <Content Include="Views\Shared\Plantilla2.cshtml" />
+    <Content Include="Views\AgregarCompra\_Compra.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

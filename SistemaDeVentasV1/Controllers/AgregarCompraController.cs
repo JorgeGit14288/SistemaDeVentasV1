@@ -16,6 +16,7 @@ namespace SistemaDeVentasV1.Controllers
         IComprasDao daoCompras = new ComprasDao();
         IAgregarComprasDao daoAgregarCompras = new AgregarComprasDao();
         private FacturacionDbEntities ctx = new FacturacionDbEntities();
+        
         // GET: AgregarCompra
         public ActionResult CrearCompra()
         {
@@ -25,6 +26,8 @@ namespace SistemaDeVentasV1.Controllers
                 idCompra = 1;
             }
             Session["idCompra"] = idCompra;
+            ViewBag.Proveedores = ctx.Proveedores.ToList();
+            ViewBag.Categorias = ctx.Categorias.ToList();
             ViewBag.Productos = daoProductos.Listar();
             return View();
         }
@@ -70,12 +73,16 @@ namespace SistemaDeVentasV1.Controllers
                     Session["idDetalle"] = 1;
                     Session["Proveedor"] = "";
 
+                    ViewBag.Proveedores = ctx.Proveedores.ToList();
+                    ViewBag.Categorias = ctx.Categorias.ToList();
                     ViewBag.Productos = daoProductos.Listar();
                     ViewBag.Mensaje = "Se ha Creado la Factura";
                     return View();
                 }
                 else
                 {
+                    ViewBag.Proveedores = ctx.Proveedores.ToList();
+                    ViewBag.Categorias = ctx.Categorias.ToList();
                     ViewBag.Productos = daoProductos.Listar();
                     ViewBag.Error = "No se pudo realizar la transaccion";
                     return View();
@@ -85,6 +92,8 @@ namespace SistemaDeVentasV1.Controllers
             catch
             {
                 ViewBag.Error = "Ha ocurrido un error al contactar con el servidor";
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View();
             }
@@ -107,6 +116,8 @@ namespace SistemaDeVentasV1.Controllers
                 Session["Proveedor"] = "";
 
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 ViewBag.Mensaje = "Ahora puede ingresar una compra al inventario";
                 return View("CrearCompra");
@@ -115,11 +126,42 @@ namespace SistemaDeVentasV1.Controllers
             {
 
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 ViewBag.Error = "No se ha podido reiniciar los datos.";
                 return View("CrearCompra");
             }
         }
+        [HttpPost]
+        public ActionResult CargarCompra(FormCollection form)
+        {
+            try
+            {
+                Compras compra = new Compras();
+                Session["Compra"] = "";
+                compra.idCompra = Convert.ToInt32(Session["idCompra"]);
+                compra.fecha = DateTime.Now;
+                compra.idFactura = Convert.ToInt32(form["idFactura"]);
+                compra.modificado = DateTime.Now;
+
+                Session["Compra"] = compra;
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
+                ViewBag.Productos = daoProductos.Listar();
+                ViewBag.Mensaje = "Se han cargado los datos de la compra";
+                return View("CrearCompra");
+            }
+            catch
+            {
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
+                ViewBag.Productos = daoProductos.Listar();
+                ViewBag.Error = "NO se ha podido cargar la compra";
+                return View("CrearCompra");
+            }
+        }
+
         [HttpPost]
         public ActionResult BuscarProveedor(FormCollection form)
         {
@@ -137,6 +179,8 @@ namespace SistemaDeVentasV1.Controllers
                     proveedor.idProveedor = idProveedor;
                     Session["Proveedor"] = proveedor;
                     // para devolver la lista de productos
+                    ViewBag.Proveedores = ctx.Proveedores.ToList();
+                    ViewBag.Categorias = ctx.Categorias.ToList();
                     ViewBag.Productos = daoProductos.Listar();
                     ViewBag.Error = "No existe un proveedor con el id ingresado";
                     return View("CrearCompra");
@@ -145,6 +189,8 @@ namespace SistemaDeVentasV1.Controllers
                 {
                     ViewBag.Mensaje = "se han encontrado los datos del proveedor, pulse en el boton cargar, para cargarlo a la transaccion";
                     // para devolver la lista de productos
+                    ViewBag.Proveedores = ctx.Proveedores.ToList();
+                    ViewBag.Categorias = ctx.Categorias.ToList();
                     ViewBag.Productos = daoProductos.Listar();
                     Session["Proveedor"] = proveedor;
                     return View("CrearCompra");
@@ -155,6 +201,8 @@ namespace SistemaDeVentasV1.Controllers
             {
                 ViewBag.Error = "No se ha podido conectar con el servidor";
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("CrearCompra");
             }
@@ -212,6 +260,8 @@ namespace SistemaDeVentasV1.Controllers
 
                 ViewBag.Mensaje = "Se ha cargado el proveedor de la compra";
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("CrearCompra");
             }
@@ -227,14 +277,24 @@ namespace SistemaDeVentasV1.Controllers
         {
             try
             {
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
+                ViewBag.Productos = daoProductos.Listar();
+
                 // buscamos el producto
                 string idProducto = form["idProducto"];
                 decimal cantidad = Convert.ToDecimal(form["cantidad"]);
                 decimal precio = Convert.ToDecimal(form["precio"]);
                 decimal precioVenta = Convert.ToDecimal(form["precioVenta"]);
-                string observaciones= form["observaciones"];
+                // string observaciones= form["observaciones"];
                 Productos p = new Productos();
                 Compras compra = new Compras();
+                if (Session["Compra"] == null || Session["Compra"].ToString()=="")
+                {
+                    ViewBag.Mensaje = "Error, no se ha creado una compra para agregar productos";
+                    return View("CrearCompra");
+
+                }
                 compra = (Compras)Session["Compra"];
                 p = daoProductos.BuscarId(idProducto);
 
@@ -280,9 +340,10 @@ namespace SistemaDeVentasV1.Controllers
                         d.idDetalle = idDetalle;
                         d.Productos = p;
                         d.idProducto = p.idProducto;
+                        d.cantidad = cantidad;
                         d.precio = precio;
                         d.precioVenta = precioVenta;
-                        d.observaciones = observaciones;
+                       // d.observaciones = observaciones;
                         d.subTotal = precio * cantidad;
 
                         detalles.Add(d);
@@ -323,6 +384,8 @@ namespace SistemaDeVentasV1.Controllers
             catch
             {
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 ViewBag.Error = "No hay conexion con la base de datos";
                 ViewBag.ErrorProducto = "No se pudo agregar el producto";
@@ -373,6 +436,8 @@ namespace SistemaDeVentasV1.Controllers
 
                 ViewBag.ErrorProducto = "Se elimino =" + d.Productos.nombre;
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
             }
@@ -408,6 +473,8 @@ namespace SistemaDeVentasV1.Controllers
 
                 ViewBag.ErrorProducto = "Se cargaron los datos para modificacion =" + d.Productos.nombre;
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
             }
@@ -415,6 +482,8 @@ namespace SistemaDeVentasV1.Controllers
             {
                 ViewBag.Error = "No se logro cargar el producto =" + id;
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
             }
@@ -463,6 +532,8 @@ namespace SistemaDeVentasV1.Controllers
                 //modificamos el detalle en la lista
                 ViewBag.Mensaje= "Se modifico el producto =" + d.Productos.nombre + " cantidad= " + d.cantidad;
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("CrearCompra");
 
@@ -471,6 +542,8 @@ namespace SistemaDeVentasV1.Controllers
             {
                 ViewBag.Error = "No se logro editar el producto ";
                 // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
             }
@@ -479,7 +552,81 @@ namespace SistemaDeVentasV1.Controllers
 
         public ActionResult CancelarEdicion(FormCollection form)
         {
+            ViewBag.Proveedores = ctx.Proveedores.ToList();
+            ViewBag.Categorias = ctx.Categorias.ToList();
+            ViewBag.Productos = daoProductos.Listar();
             return RedirectToAction("CrearCompra");
+        }
+        public ActionResult BuscarProducto(string id)
+        {
+            Productos p = new Productos();
+            p = ctx.Productos.Find(id);
+            ViewBag.Proveedores = ctx.Proveedores.ToList();
+            ViewBag.Categorias = ctx.Categorias.ToList();
+            ViewBag.Productos = daoProductos.Listar();
+           
+            if (p == null)
+            {
+                ViewBag.Error = "No existe el producto con tal id, debe de crearlo";
+                return View("CrearCompra");
+            }
+            else
+            {
+                ViewBag.Prod = p;
+                return View("CrearCompra");
+            }
+
+           
+        }
+        public ActionResult CrearProducto(FormCollection form)
+        {
+            try
+            {
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
+                ViewBag.Productos = daoProductos.Listar();
+                string idProducto = form["idProducto"];
+
+                Productos temp = new Productos();
+                temp = ctx.Productos.Find(idProducto);
+                if (temp == null)
+                {
+                    temp = new Productos();
+                    temp.idProducto = form["idProducto"];
+                    temp.nombre = form["nombre"];
+                    //temp.observacion = form["observacion"];
+                    temp.idCategoria = Convert.ToInt32( form["idCategoria"]);
+                    temp.precio = 0;
+                    temp.precioCompra = 0;
+                    temp.creado = DateTime.Now;
+                    temp.modificado = DateTime.Now;
+                    temp.existencia = 0;
+
+                    ctx.Productos.Add(temp);
+                    ctx.SaveChanges();
+
+                    ViewBag.Mensaje = "Se ha creado el producto";
+                    ViewBag.Prod = temp;
+                    return View("CrearCompra");
+                }
+                else
+                {
+                    ViewBag.Prod = temp;
+                    ViewBag.Error = "Ya existe un producto con el mismo id";
+                    return View("CrearCompra");
+                }
+
+                
+                
+            }
+            catch
+            {
+                ViewBag.Error = "Ha ocurrido un error al contactar al servidor";
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
+                ViewBag.Productos = daoProductos.Listar();
+                return View("CrearCompra");
+            }
         }
 
     }

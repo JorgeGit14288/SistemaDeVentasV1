@@ -11,9 +11,6 @@
 
     }
     Productos prod = new Productos();
-    prod.idProducto = "2";
-    prod.nombre = "Prueba";
-    ViewBag.Prod = prod;
 
     if (ViewBag.Prod == null)
     {
@@ -29,7 +26,7 @@
     <div class="col-md-12">
         <form id="fBuscarProducto" method="post" action="BuscarProducto" class="form-inline">
             <label> Producto:</label>
-            <input list="productos" name="idProducto" id="idProducto" class="form-control" required />
+            <input list="productos" name="id" id="id" class="form-control" required />
             <datalist id="productos">
                 @{
                     foreach (var p in productos)
@@ -42,6 +39,7 @@
         </form>
     </div>
 </div>
+
 @{
     if (ViewBag.Prod == null)
     {
@@ -50,7 +48,9 @@
                 <form action="CrearProducto" id="fCrearProducto" method="post" class="form-horizontal">
                     Id: <input type="text" name="idProducto" id="idProducto" class="form-control input-sm" required />
                     Nombre: <input type="text" name="nombre" id="nombre" class="form-control input-sm" required />
+                    
                     Categoria: <input type="text" name="idCategoria" id="idCategoria" class="form-control input-sm" required />
+
                     Observaciones: <input type="text" name="observacion" id="observacion" class="form-control input-sm" required />
                     <input type="submit" class="btn btn-primary" value="Crear Nuevo" />
                 </form>
@@ -62,25 +62,49 @@
         <div class="row">
             <div class="col-md-12">
                 <form id="fCargarProducto" method="post" action="CargarProducto" class="form-inline">
-                    <table>
+                    <table class="table table-responsive table-bordered">
                         <thead>
                             <tr>
-                                <th> </th>
-                                <th>Actual</th>
-                                <th>Agregar</th>
+                                <td></td>
+                                <td>Actual</td>
+                                <td>Nuevo</td>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Id</td>
                                 <td>@prod.idProducto</td>
-                                <td><input type="text" name="idProducto" id="idProducto" class="form-control input-sm" required /></td>
+                                <td><input type="hidden" name="idProducto" id="idProducto" value="@prod.idProducto" /></td>
                             </tr>
                             <tr>
-                                <td>Id</td>
-                                <td>@prod.idProducto</td>
-
+                                <td>Nombre</td>
+                                <td>@prod.nombre</td>
+                                <td></td>
                             </tr>
+                            <tr>
+                                <td>Cantidad</td>
+                                <td>@prod.existencia</td>
+                                <td> <input type="number" name="cantidad" id="cantidad" size="6" min="1" required class="input-sm" /> </td>
+                            </tr>
+                            <tr>
+                                <td>Precio</td>
+                                <td>@prod.precioCompra</td>
+                                <td> <input type="number" name="precio" id="precio" size="6" min="1"  required class=" input-sm" /> </td>
+                            </tr>
+                            <tr>
+                                <td>Prec.Venta</td>
+                                <td>@prod.precio</td>
+                                <td> <input type="number" name="precioVenta" id="precioVenta" size="6" min="1"  required class=" input-sm" /> </td>
+                            </tr>
+                            <tr>
+                                <td>Observ.</td>
+                                <td>@prod.observacion</td>
+                                <td> </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><input type="submit" value="Agregar" class="btn btn-primary" /></td>                            
+                            </tr>         
                         </tbody>
                     </table>
 
@@ -89,4 +113,5 @@
         </div>
     }
 }
+
 

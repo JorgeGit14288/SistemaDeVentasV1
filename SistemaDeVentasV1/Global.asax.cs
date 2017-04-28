@@ -31,7 +31,7 @@ namespace SistemaDeVentasV1
             Session["Comprar"] = "";
             Session["Compra"] = "";
             Session["detCompra"] = "";
-            Session["totalCompra"] = "";
+            Session["totalCompra"] = "0";
             Session["idCompra"] = "1";
             Session["idDetalleC"] = "0";
             Session["Proveedor"] = "";

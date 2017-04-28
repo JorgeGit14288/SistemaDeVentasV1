@@ -5,9 +5,32 @@
     ViewBag.InfoPagina = "Ingreso de mercaderia al inventario de el sistema";
     ViewBag.TituloVentana = "Formulario de Ingreso";
     ViewBag.FooterVentana = "Toda la informacion es Requerida";
-    Layout = "~/Views/Shared/Plantilla2.cshtml";
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
 }
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <form action="BuscarProveedor" method="post" class="form-inline">
+                <div class="box box-default">
+                    <div class="box-header with-border">
+                        <center><h3 class="box-title"> Registro de Compra</h3> </center>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        @Html.Partial("_Compra")
+                    </div>
+                    <div class="box-footer">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -66,7 +89,6 @@
                 <div class="box-footer">
                 </div>
             </div>
-        </div>
         </div>
     </div>
 </div>

@@ -11,7 +11,7 @@
     }
     List<Proveedores> proveedores = new List<Proveedores>();
 
-    if (ViewBag.Proveedores == null || ViewBag.Proveedores == "")
+    if (ViewBag.Proveedores == null )
     {
 
     }
@@ -43,15 +43,15 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <center><h4>Datos del Proveedor</h4></center>
         <form id="fCargarProveedor" action="CargarProveedor" method="post" class="form-horizontal">
+            <center><h4>Datos del Proveedor</h4></center>
             <div class="form-inline">
                 <div class="row col-md-12">
                     <div class="col-md-4">
                         <div class="col-md-4">
                             Id:
                         </div>
-                         <input type="text" name="idProveedor" id="idProveedor" value="@proveedor.idProveedor" required class="form-control" />
+                        <input type="text" name="idProveedor" id="idProveedor" value="@proveedor.idProveedor" required class="form-control" />
                     </div>
                     <div class="col-md-4">
                         <div class="col-md-4">
@@ -87,7 +87,7 @@
                         <div class="col-md-4">
                             Email:
                         </div>
-                        <input type="email" name="email" id="email" class="form-control" />
+                        <input type="email" name="email" id="email" value="@proveedor.email" class="form-control" />
                     </div>
                 </div>
 
