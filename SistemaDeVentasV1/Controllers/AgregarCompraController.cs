@@ -330,7 +330,7 @@ namespace SistemaDeVentasV1.Controllers
                     if (temp == null)
                     {
                         // creamos un nuevo detalle, obtenemos el id de la factura
-                       // int idDetalle = Int32.Parse(Session["idDetalleC"].ToString());
+                        // int idDetalle = Int32.Parse(Session["idDetalleC"].ToString());
                         // iniciamos el contador para llenar la lista de detalles
                         int idDetalle = Int32.Parse(Session["idDetalleC"].ToString()) + 1;
 
@@ -343,11 +343,11 @@ namespace SistemaDeVentasV1.Controllers
                         d.cantidad = cantidad;
                         d.precio = precio;
                         d.precioVenta = precioVenta;
-                       // d.observaciones = observaciones;
+                        // d.observaciones = observaciones;
                         d.subTotal = precio * cantidad;
 
                         detalles.Add(d);
-                        
+
 
                         decimal totalCompra = Convert.ToDecimal(Session["totalCompra"]);
                         totalCompra = totalCompra + Convert.ToDecimal(d.subTotal);
@@ -360,21 +360,34 @@ namespace SistemaDeVentasV1.Controllers
                     else
                     {
                         // el producto ya esta registrado en el detalle asi que solo actualizamos los datos
-   
+
                         // el producto ya existe en el detalle, entonces lo aumentamos
-                        detalles.Remove(temp);
-                        temp.cantidad = temp.cantidad + cantidad;
-                        temp.subTotal = temp.cantidad * temp.precio;
-                        detalles.Add(temp);
-                        //recalculamos el total otra vez
-                        decimal totalCompra = 0;
-                        foreach (var i in detalles)
+
+                        if (temp.cantidad == cantidad && temp.precio == precio && temp.precioVenta == precioVenta)
                         {
-                            totalCompra = totalCompra + Convert.ToDecimal(i.subTotal);
+                            ViewBag.Error = "Los datos ingresados son los mismos por tanto no se modifico el detalle";
+                            /// los datos ingresados son los mismos, por tanto no los cargamos ni modificamos el detalle
+
                         }
-                        Session["totalCompra"] = totalCompra;
-                        Session["detCompra"] = detalles;
-                        ViewBag.ErrorProducto = "se Modifico " + cantidad + " " + p.nombre + " precio Q" + p.precio + "sub Total  Q" + temp.subTotal;
+                        else
+                        {
+                            detalles.Remove(temp);
+                            temp.precio = precio;
+                            temp.precioVenta = precioVenta;
+                            temp.cantidad = temp.cantidad + cantidad;
+                            temp.subTotal = temp.cantidad * temp.precio;
+                            detalles.Add(temp);
+                            //recalculamos el total otra vez
+                            decimal totalCompra = 0;
+                            foreach (var i in detalles)
+                            {
+                                totalCompra = totalCompra + Convert.ToDecimal(i.subTotal);
+                            }
+                            Session["totalCompra"] = totalCompra;
+                            Session["detCompra"] = detalles;
+                            ViewBag.ErrorProducto = "se Modifico " + cantidad + " " + p.nombre + " precio Q" + p.precio + "sub Total  Q" + temp.subTotal;
+                            ViewBag.Mensaje = "Se modifico el detalle de la compra";
+                        }
                     }
                     ViewBag.Productos = daoProductos.Listar();
                     return View("CrearCompra");
@@ -433,23 +446,22 @@ namespace SistemaDeVentasV1.Controllers
                 Session["totalCompra"] = totalCompra;
                 //devolvemos los datos
 
-
+   
                 ViewBag.ErrorProducto = "Se elimino =" + d.Productos.nombre;
                 // para devolver la lista de productos
                 ViewBag.Proveedores = ctx.Proveedores.ToList();
                 ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
-                return View("Facturar");
+                return View("CrearCompra");
             }
             catch
             {
                 ViewBag.Error = "No se pudo eliminar el producto del detalle";
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
-                return View("Facturar");
+                return View("CrearCompra");
 
             }
-
         }
 
         public ActionResult EditarDetalle(FormCollection form, int id)
@@ -468,15 +480,16 @@ namespace SistemaDeVentasV1.Controllers
                // ViewBag.modIdProducto = d.idProducto;
                 //ViewBag.modCantidad = d.cantidad;
                 //ViewBag.modIdDetalle = d.idDetalle;
-                ViewBag.modDetalle = d;
 
+                ViewBag.modDetalle = d;
+                ViewBag.Prod = ctx.Productos.Find(d.idProducto);
 
                 ViewBag.ErrorProducto = "Se cargaron los datos para modificacion =" + d.Productos.nombre;
                 // para devolver la lista de productos
                 ViewBag.Proveedores = ctx.Proveedores.ToList();
                 ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
-                return View("Facturar");
+                return View("CrearCompra");
             }
             catch
             {
@@ -485,7 +498,7 @@ namespace SistemaDeVentasV1.Controllers
                 ViewBag.Proveedores = ctx.Proveedores.ToList();
                 ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
-                return View("Facturar");
+                return View("CrearCompra");
             }
 
         }
@@ -502,11 +515,11 @@ namespace SistemaDeVentasV1.Controllers
                 decimal cantidad = Convert.ToDecimal(form["cantidad"]);
                 decimal precio = Convert.ToDecimal(form["precio"]);
                 decimal precioVenta = Convert.ToDecimal(form["precioVenta"]);
-                string observaciones = form["observaciones"];
+                //string observaciones = form["observaciones"];
 
                 //Obtenemos el objeto de session de detalles
                 List<DetallesCompra> detalles = new List<DetallesCompra>();
-                detalles = (List<DetallesCompra>)Session["Detalles"];
+                detalles = (List<DetallesCompra>)Session["detCompra"];
                 //obtenemos el detalle a eliminar de la lista
                 DetallesCompra d = new DetallesCompra();
                 //busca el detalle en la lista, segun el id
@@ -515,9 +528,10 @@ namespace SistemaDeVentasV1.Controllers
                 //eliminamos el objeto de la lista
                 detalles.Remove(d);
                 //obteniendo el producto devolvemos la cantidad y el ID para poder ser Modificados
+                d.cantidad = cantidad;
                 d.precio = precio;
                 d.precioVenta = precioVenta;
-                d.observaciones = observaciones;
+               // d.observaciones = observaciones;
                 d.subTotal = cantidad * precio;
                
                 detalles.Add(d);
@@ -545,7 +559,7 @@ namespace SistemaDeVentasV1.Controllers
                 ViewBag.Proveedores = ctx.Proveedores.ToList();
                 ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
-                return View("Facturar");
+                return View("CrearCompra");
             }
 
         }
@@ -594,7 +608,7 @@ namespace SistemaDeVentasV1.Controllers
                     temp = new Productos();
                     temp.idProducto = form["idProducto"];
                     temp.nombre = form["nombre"];
-                    //temp.observacion = form["observacion"];
+                    temp.observacion = form["observacion"];
                     temp.idCategoria = Convert.ToInt32( form["idCategoria"]);
                     temp.precio = 0;
                     temp.precioCompra = 0;
@@ -621,6 +635,15 @@ namespace SistemaDeVentasV1.Controllers
             }
             catch
             {
+                var temp = new Productos();
+                temp.idProducto = form["idProducto"];
+                temp.nombre = form["nombre"];
+                temp.observacion = form["observacion"];
+                //temp.observacion = form["observacion"];
+                temp.idCategoria = Convert.ToInt32(form["idCategoria"]);
+
+                ViewBag.tempProd = temp;
+
                 ViewBag.Error = "Ha ocurrido un error al contactar al servidor";
                 ViewBag.Proveedores = ctx.Proveedores.ToList();
                 ViewBag.Categorias = ctx.Categorias.ToList();

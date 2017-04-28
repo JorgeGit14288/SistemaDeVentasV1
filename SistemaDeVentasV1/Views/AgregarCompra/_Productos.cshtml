@@ -20,11 +20,29 @@
     {
         prod = (Productos)ViewBag.Prod;
     }
+    var temp = new Productos();
+    if (ViewBag.tempProd==null)
+    {
+
+    }
+    else
+    {
+        temp = (Productos)ViewBag.tempProd;
+    }
+    var modDetalle = new DetallesCompra();
+    if(ViewBag.modDetalle==null)
+    {
+
+    }
+    else
+    {
+        modDetalle = (DetallesCompra)ViewBag.modDetalle;
+    }
 
 }
 <div class="row">
     <div class="col-md-12">
-        <form id="fBuscarProducto" method="post" action="BuscarProducto" class="form-inline">
+        <form id="fBuscarProducto" method="post" action="@Url.Action("BuscarProducto","AgregarCompra")" class="form-inline">
             <label> Producto:</label>
             <input list="productos" name="id" id="id" class="form-control" required />
             <datalist id="productos">
@@ -45,15 +63,16 @@
     {
         <div class="row">
             <div class="col-md-12">
-                <form action="CrearProducto" id="fCrearProducto" method="post" class="form-horizontal">
-                    Id: <input type="text" name="idProducto" id="idProducto" class="form-control input-sm" required />
-                    Nombre: <input type="text" name="nombre" id="nombre" class="form-control input-sm" required />
-                    
-                    Categoria: <input type="text" name="idCategoria" id="idCategoria" class="form-control input-sm" required />
-
-                    Observaciones: <input type="text" name="observacion" id="observacion" class="form-control input-sm" required />
+                <form action="@Url.Action("CrearProducto","AgregarCompra")" id="fCrearProducto" method="post" class="form-horizontal">
+                    Id: <input type="text" name="idProducto" id="idProducto" class="form-control input-sm" value="@temp.idProducto" required />
+                    Nombre: <input type="text" name="nombre" id="nombre" class="form-control input-sm" value="@temp.nombre" required />
+                    Categoria: <input type="text" name="idCategoria" id="idCategoria" class="form-control input-sm" value="@temp.idCategoria" required />
+                    Observaciones: <input type="text" name="observacion" id="observacion" class="form-control input-sm" value="@temp.observacion" required />
                     <input type="submit" class="btn btn-primary" value="Crear Nuevo" />
                 </form>
+                <div class="row">
+                    @ViewBag.ErrorProducto
+                </div>
             </div>
         </div>
     }
@@ -61,7 +80,7 @@
     {
         <div class="row">
             <div class="col-md-12">
-                <form id="fCargarProducto" method="post" action="CargarProducto" class="form-inline">
+                <form id="fCargarProducto" method="post" action="@Url.Action("CargarProducto","AgregarCompra")" class="form-inline">
                     <table class="table table-responsive table-bordered">
                         <thead>
                             <tr>
@@ -74,7 +93,9 @@
                             <tr>
                                 <td>Id</td>
                                 <td>@prod.idProducto</td>
-                                <td><input type="hidden" name="idProducto" id="idProducto" value="@prod.idProducto" /></td>
+                                <td><input type="hidden" name="idProducto" id="idProducto" value="@prod.idProducto" />
+                                    <input type="hidden" name="idDetalle" id="idDetalle" value="@modDetalle.idDetalle" />
+                                </td>
                             </tr>
                             <tr>
                                 <td>Nombre</td>
@@ -84,17 +105,17 @@
                             <tr>
                                 <td>Cantidad</td>
                                 <td>@prod.existencia</td>
-                                <td> <input type="number" name="cantidad" id="cantidad" size="6" min="1" required class="input-sm" /> </td>
+                                <td> <input type="number" name="cantidad" id="cantidad" size="6" min="1" value="@modDetalle.cantidad" required class="input-sm" /> </td>
                             </tr>
                             <tr>
                                 <td>Precio</td>
                                 <td>@prod.precioCompra</td>
-                                <td> <input type="number" name="precio" id="precio" size="6" min="1"  required class=" input-sm" /> </td>
+                                <td> <input type="number" name="precio" id="precio" size="6" min="1" value="@modDetalle.precio"  required class=" input-sm" /> </td>
                             </tr>
                             <tr>
                                 <td>Prec.Venta</td>
                                 <td>@prod.precio</td>
-                                <td> <input type="number" name="precioVenta" id="precioVenta" size="6" min="1"  required class=" input-sm" /> </td>
+                                <td> <input type="number" name="precioVenta" id="precioVenta" value="@modDetalle.precioVenta" size="6" min="1"  required class=" input-sm" /> </td>
                             </tr>
                             <tr>
                                 <td>Observ.</td>
@@ -103,12 +124,25 @@
                             </tr>
                             <tr>
                                 <td></td>
-                                <td><input type="submit" value="Agregar" class="btn btn-primary" /></td>                            
-                            </tr>         
+                                  @{
+                                      if (ViewBag.modDetalle == null)
+                                      {
+                                        <td><input type="submit" value="Agregar" class="btn btn-primary" /></td>
+                                      }
+                                      else
+                                      {
+                                        <td><input type="submit" value="Agregar" formaction="@Url.Action("EditarDetalle","AgregarCompra")" class="btn btn-primary" /></td>
+                                        <td><input type="submit" value="Cancelar" formaction="@Url.Action("CancelarEdicion","AgregarCompra")" class="btn btn-warning" /></td>
+                                      }
+                                }                              
+                             </tr>         
                         </tbody>
                     </table>
 
                 </form>
+                <div class="row">
+                    @ViewBag.ErrorProducto
+                </div>
             </div>
         </div>
     }
