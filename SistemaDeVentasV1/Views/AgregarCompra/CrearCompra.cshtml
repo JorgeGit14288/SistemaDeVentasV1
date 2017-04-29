@@ -177,7 +177,6 @@
                         }
                     }
                     
-                  
                 </div>
             </div>
             <!-- /.box-body -->
@@ -189,10 +188,27 @@
 <!-- /.row -->
 <!-- END ACCORDION & CAROUSEL-->
 
-<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>
-<div id="demo" class="collapse">
-    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-</div>
+<div class="row">
+    <div class="col-md-12">
+        <form id="fComprar" action="@Url.Action("CrearCompra","AgregarCompra")" method="post">
+            <div class="col-md-2">
 
+            </div>
+            <div class="col-md-3">
+                <input type="submit" value="Crear Compra" class="form-control btn btn-primary" />
+            </div>
+            <div class="col-md-3">
+                <input type="submit" value="Eliminar Datos" formaction="@Url.Action("BorrarCompra","AgregarCompra")" class="btn btn-warning form-control" />
+            </div>
+
+            <div class="col-md-4">
+                <div class="col-md-4">
+                    <label>Total Q</label>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" name="totalCompra" id="totalCompra" class="form-control" value="@Session["totalCompra"]" readonly />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

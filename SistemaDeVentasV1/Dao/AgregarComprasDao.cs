@@ -7,6 +7,7 @@ using System.Transactions;
 using System.Data.Entity;
 
 
+
 namespace SistemaDeVentasV1.Dao
 {
    
@@ -52,6 +53,7 @@ namespace SistemaDeVentasV1.Dao
                             temp.idProducto = d.idProducto;
                             temp.cantidad = d.cantidad;
                             temp.precio = d.precio;
+                            temp.precioVenta = d.precioVenta;
                             temp.subTotal = d.subTotal;
                             temp.observaciones = d.observaciones;
 
@@ -63,6 +65,7 @@ namespace SistemaDeVentasV1.Dao
                             producto = ctx2.Productos.Find(temp.idProducto);
                             decimal existencia = Convert.ToDecimal(producto.existencia);
                             decimal cantTotal = existencia + Convert.ToDecimal(temp.cantidad);
+                            producto.existencia = cantTotal;
                             producto.precioCompra = temp.precio;
                             producto.precio = Convert.ToDecimal(temp.precioVenta);
                             producto.modificado = DateTime.Now;

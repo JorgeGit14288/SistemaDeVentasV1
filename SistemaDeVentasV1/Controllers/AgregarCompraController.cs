@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using SistemaDeVentasV1.Models;
 using SistemaDeVentasV1.Dao;
+using Microsoft.AspNet.Identity;
 
 namespace SistemaDeVentasV1.Controllers
 {
@@ -43,6 +44,11 @@ namespace SistemaDeVentasV1.Controllers
                 proveedor = (Proveedores)Session["Proveedor"];
                 Compras compra = new Compras();
                 compra = (Compras)Session["Compra"];
+                compra.total = decimal.Parse(Session["totalCompra"].ToString());
+                compra.idProveedor = proveedor.idProveedor;
+                compra.usuario = User.Identity.GetUserName();
+   
+
                 List<DetallesCompra> detalles = new List<DetallesCompra>();
                 detalles = (List<DetallesCompra>)Session["detCompra"];
 
@@ -275,17 +281,19 @@ namespace SistemaDeVentasV1.Controllers
         }
         public ActionResult CargarProducto(FormCollection form)
         {
+            // buscamos el producto
+            string idProducto = form["idProducto"];
+            decimal cantidad = Convert.ToDecimal(form["cantidad"]);
+            decimal precio = Convert.ToDecimal(form["precio"]);
+            decimal precioVenta = Convert.ToDecimal(form["precioVenta"]);
+
             try
             {
                 ViewBag.Proveedores = ctx.Proveedores.ToList();
                 ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
 
-                // buscamos el producto
-                string idProducto = form["idProducto"];
-                decimal cantidad = Convert.ToDecimal(form["cantidad"]);
-                decimal precio = Convert.ToDecimal(form["precio"]);
-                decimal precioVenta = Convert.ToDecimal(form["precioVenta"]);
+
                 // string observaciones= form["observaciones"];
                 Productos p = new Productos();
                 Compras compra = new Compras();
@@ -345,11 +353,18 @@ namespace SistemaDeVentasV1.Controllers
                         d.precioVenta = precioVenta;
                         // d.observaciones = observaciones;
                         d.subTotal = precio * cantidad;
-
+                        decimal totalCompra = 0;
                         detalles.Add(d);
+                        if (Session["totalCompra"].ToString()==""|| Session["totalCompra"]==null)
+                        {
 
-
-                        decimal totalCompra = Convert.ToDecimal(Session["totalCompra"]);
+                        }
+                        else
+                        {
+                           totalCompra = Decimal.Parse(Session["totalCompra"].ToString());
+                        }
+                       
+                        //decimal totalCompra = Convert.ToDecimal(Session["totalCompra"]);
                         totalCompra = totalCompra + Convert.ToDecimal(d.subTotal);
                         Session["totalCompra"] = totalCompra;
                         //volvemos a parsear el al objeto sessio
@@ -581,7 +596,10 @@ namespace SistemaDeVentasV1.Controllers
            
             if (p == null)
             {
+                p = new Productos();
+                p.idProducto = id;
                 ViewBag.Error = "No existe el producto con tal id, debe de crearlo";
+                ViewBag.tempProd = p;
                 return View("CrearCompra");
             }
             else
