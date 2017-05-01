@@ -4,86 +4,149 @@
 @{
     ViewBag.Title = "CREAR FACTURA";
     ViewBag.TituloControlador = "Facturar";
+    ViewBag.InfoPagina = "Vista para crear una factura";
+    ViewBag.TituloVentana = "Datos de la Factura";
     Layout = "~/Views/Shared/Plantilla1.cshtml";
     ViewBag.idFactura = "1";
     //Creamos los objetos a utlilizar en esta pagina
     Facturas factura = new Facturas();
-}  
- <div class="form-horizontal">
-     
-    <hr />
-    <div class=" row">
-        <div class="col-md-4">
-            <div class="panel panel-success">
-                 <div class="panel-heading"><center>DATOS DE LA FACTURA </center></div>
-                <div class="panel-body">
-                    @Html.Partial("_Cliente")
-                </div>
-                <div class="panel-footer">
+
+    Clientes cliente = new Clientes();
+    if (Session["Cliente"].ToString() == "")
+    {
+        // ViewBag.ErrorCliente = "Ingrese los datos del cliente";
+        cliente = new Clientes();
+    }
+    else
+    {
+        cliente = (Clientes)Session["Cliente"];
+    }
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="box-group" id="accordion">
+
                     @{
-                        if (ViewBag.ErrorCliente == null)
+                        if (String.IsNullOrEmpty(cliente.nit) || String.IsNullOrEmpty(cliente.nombre))
                         {
 
+                             <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                            <div class="panel box box-primary">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            Informacion del Cliente
+                                        </a>
+                                    </h4>
+                                </div>
+
+                                <div id="collapseOne" class="panel-collapse collapse in">
+                                    <div class="box-body">
+                                        @Html.Partial("_Cliente")
+                                    </div>
+                                </div>
+                            </div>
                         }
                         else
                         {
-                            <div class="alert alert-warning alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <center> @ViewBag.ErrorCliente </center>
+
+                             <!-- we are adding the .panel class so bootstrap.js collapse plugin detects it -->
+                            <div class="panel box box-primary">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                            <strong><text class="text-red ">Datos Factura:</text></strong> 
+                                            <strong>  <text class="text-blue">Num: </text></strong> 
+                                            <text class="text-black">@Session["idFactura"] ,</text> 
+                                            <strong><text class="text-blue">Nit: </text></strong>
+                                            <text class="text-black">@cliente.nit ,</text>
+                                            <strong><text class="text-blue">Nombre: </text></strong>
+                                            <text class="text-black">@cliente.nombre ,</text>
+                                            <strong><text class="text-blue">Fecha: </text></strong> 
+                                            <text class="text-black">@DateTime.Now ,</text>
+
+                                        </a>
+                                    </h4>
+                                </div>
+
+                                <div id="collapseOne" class="panel-collapse collapse">
+                                    <div class="box-body">
+                                        @Html.Partial("_Cliente")
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                        if (String.IsNullOrEmpty(cliente.nombre) || String.IsNullOrEmpty(cliente.nit))
+                        {
+                            <div class="panel box box-danger">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                            Detalles de Factura
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseTwo" class="panel-collapse collapse">
+                                    <div class="box-body">
+                                        <h3 class="h3 text-danger">Ingrese los datos del cliente a facturar para agregar productos a la factura, Gracias</h3>
+                                    </div>
+                                </div>
                             </div>
                         }
+                        else
+                        {
+
+                            <div class="panel box box-success">
+                                <div class="box-header with-border">
+                                    <h4 class="box-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                            Detalles de Compra
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseThree" class="panel-collapse collapse in">
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @Html.Partial("_Productos")
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                @Html.Partial("_Detalles")
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
                     }
 
                 </div>
-
             </div>
+            <!-- /.box-body -->
         </div>
-        <div class="col-md-8">
-            <div class="panel-group">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel panel-success">
-                            <div class="panel-heading"><center>AGREGAR PRODUCTOS</center></div>
-                            <div class="panel-body">
-                                @Html.Partial("_Productos")
-                            </div>
-                            <div class="panel-footer">
-                                @{
-                                    if (ViewBag.ErrorProducto == null)
-                                    {
+        <!-- /.box -->
+    </div>
+    <!-- /.col -->
+</div>
+<!-- /.row -->
+<!-- END ACCORDION & CAROUSEL-->
 
-                                    }
-                                    else
-                                    {
-                                        <div class="alert alert-warning alert-dismissable">
-                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                            <center> <strong>¡Alerta!</strong> @ViewBag.ErrorProducto </center>
-                                        </div>
-                                    }
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="panel-success">
-                             <div class="panel-heading"><center>DETALLES DE FACTURA</center></div>
-                            <div class="panel-body bg-gray-active">
-                                <div class="row">
-                                    @Html.Partial("_Detalles")
-                                </div>
-                            </div>
-                            <div class="panel-footer">
-                                @Html.Partial("_TotalFactura")
-                            </div>
-                        </div>                        
-                    </div>
-                </div>
-             </div>
-        </div>
+<div class="row">
+    <div class="col-md-12">
+        @Html.Partial("_TotalFactura")
     </div>
 </div>
+
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

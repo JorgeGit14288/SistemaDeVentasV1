@@ -30,6 +30,8 @@ namespace SistemaDeVentasV1.Controllers
             Session["idFactura"] = idFactura;
 
             //ViewBag.idProducto = new SelectList(daoProductos.Listar(), "nombre", "precio","existencia");
+            // le devolvemos la lista de clientes
+            ViewBag.Clientes = daoClientes.Listar();
             // para devolver la lista de productos
             ViewBag.Productos =daoProductos.Listar();
             return View(new Facturar());
@@ -45,7 +47,18 @@ namespace SistemaDeVentasV1.Controllers
                 List<Detalles> detalles = (List<Detalles>)Session["Detalles"];
                 decimal totalFactura = Convert.ToDecimal(Session["totalFactura"]);              
                 Facturas f = new Facturas();
-                f = (Facturas)Session["Factura"];
+                if (Session["Factura"]== null || Session["Factura"].ToString()=="")
+                {
+
+                }
+                else
+                {
+                    f = (Facturas)Session["Factura"];
+                }
+                f.nitCliente = c.nit;
+                f.nombre = c.nombre;
+                f.direccion = c.direccion;
+                f.fecha = DateTime.Now;
                 f.total = totalFactura;
                 f.usuario = Session["Usuario"].ToString();
                 int tempIdFactura = daoFacturas.GetIdFactura();
@@ -60,6 +73,7 @@ namespace SistemaDeVentasV1.Controllers
                     detalles = detalles,
                     cliente = c
                 };
+                ViewBag.Clientes = daoClientes.Listar();
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
 
@@ -85,6 +99,7 @@ namespace SistemaDeVentasV1.Controllers
             {
                 ViewBag.Error = "Error, No hay conexion con la base de datos";
                 // para devolver la lista de productos
+                ViewBag.Clientes = daoClientes.Listar();
                 ViewBag.Productos = daoProductos.Listar();
                 return View();
             }
@@ -104,13 +119,14 @@ namespace SistemaDeVentasV1.Controllers
                 Session["totalFactura"] = "0";
 
                 // para devolver la lista de productos
+                ViewBag.Clientes = daoClientes.Listar();
                 ViewBag.Productos = daoProductos.Listar();
                 ViewBag.Mensaje = "Ahora puede crear una nueva factura";
                 return View("Facturar");
             }
             catch
             {
-                return View("Facturar");
+                return RedirectToAction ("Facturar");
             }
         }
         [HttpPost]
@@ -132,6 +148,7 @@ namespace SistemaDeVentasV1.Controllers
                     };
                     Session["Cliente"] = cliente;
                     // para devolver la lista de productos
+                    ViewBag.Clientes = daoClientes.Listar();
                     ViewBag.Productos = daoProductos.Listar();
                     ViewBag.ErrorCliente = "No existe un cliente registrado con este nit";
                     return View("Facturar");
@@ -140,8 +157,31 @@ namespace SistemaDeVentasV1.Controllers
                 {
                     ViewBag.ErrorCliente = "Se ha encontrado el cliente";
                     // para devolver la lista de productos
+                    ViewBag.Clientes = daoClientes.Listar();
                     ViewBag.Productos = daoProductos.Listar();
                     Session["Cliente"] = cliente;
+
+                    Facturas f = new Facturas()
+                    {
+                        nitCliente = cliente.nit,
+                        nombre = cliente.nombre,
+                        direccion = cliente.direccion,
+
+                        fecha = DateTime.Now.Date
+                    };
+                    f.idFactura = Convert.ToInt32(Session["idFactura"]);
+                    if (f.idFactura == 0)
+                    {
+                        f.idFactura = daoFacturas.GetIdFactura();
+                        f.fecha = DateTime.Now.Date;
+                        Session["idFactura"] = f.idFactura;
+                    }
+                    f.usuario = Session["Usuario"].ToString();
+                    Session["Factura"] = f;
+
+
+
+
                     return View("Facturar");
                 }
               
@@ -150,6 +190,7 @@ namespace SistemaDeVentasV1.Controllers
             {
                 ViewBag.Error = "No se ha podido conectar con el servidor";
                 // para devolver la lista de productos
+                ViewBag.Clientes = daoClientes.Listar();
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
             }
@@ -196,12 +237,14 @@ namespace SistemaDeVentasV1.Controllers
                 if(f.idFactura==0)
                 {
                     f.idFactura = daoFacturas.GetIdFactura();
+                    f.fecha = DateTime.Now.Date;
                     Session["idFactura"] = f.idFactura;
                 }
                 f.usuario = Session["Usuario"].ToString();
                 Session["Factura"] = f;
                 ViewBag.Mensaje = "Se ha Cargado el cliente a la factura";
                 ViewBag.ErrorCliente = "Cliente Cargado";
+                ViewBag.Clientes = daoClientes.Listar();
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
@@ -210,6 +253,9 @@ namespace SistemaDeVentasV1.Controllers
             {
                 ViewBag.Error = "Error, No se ha podido conectar con el servidor";
                 ViewBag.ErrorCliente = "No se ha podido cargar el cliente";
+                ViewBag.Clientes = daoClientes.Listar();
+                // para devolver la lista de productos
+                ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
             }
         }
@@ -223,6 +269,9 @@ namespace SistemaDeVentasV1.Controllers
                 decimal cantidad = Convert.ToDecimal (form["cantidad"]);
                 Productos p = new Productos() ;
                 p = daoProductos.BuscarId(idProducto);
+                ViewBag.Clientes = daoClientes.Listar();
+                // para devolver la lista de productos
+                ViewBag.Productos = daoProductos.Listar();
 
                 if (String.IsNullOrEmpty(p.idProducto))
                 {
@@ -316,6 +365,7 @@ namespace SistemaDeVentasV1.Controllers
             }
             catch
             {
+                ViewBag.Clientes = daoClientes.Listar();
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
                 ViewBag.Error= "No hay conexion con la base de datos";
@@ -328,6 +378,9 @@ namespace SistemaDeVentasV1.Controllers
             try
             {
 
+                ViewBag.Clientes = daoClientes.Listar();
+                // para devolver la lista de productos
+                ViewBag.Productos = daoProductos.Listar();
                 //Obtenemos el objeto de session de detalles
                 List<Detalles> detalles = new List<Detalles>();
                 detalles = (List<Detalles>)Session["Detalles"];
@@ -372,6 +425,7 @@ namespace SistemaDeVentasV1.Controllers
             catch
             {
                 ViewBag.Error = "No se pudo eliminar el producto del detalle";
+                ViewBag.Clientes = daoClientes.Listar();
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
@@ -383,7 +437,9 @@ namespace SistemaDeVentasV1.Controllers
         {
             try
             {
-
+                ViewBag.Clientes = daoClientes.Listar();
+                // para devolver la lista de productos
+                ViewBag.Productos = daoProductos.Listar();
                 //Obtenemos el objeto de session de detalles
                 List<Detalles> detalles = new List<Detalles>();
                 detalles = (List<Detalles>)Session["Detalles"];
@@ -403,6 +459,7 @@ namespace SistemaDeVentasV1.Controllers
             catch
             {
                 ViewBag.Error = "No se logro editar el producto =" + id;
+                ViewBag.Clientes = daoClientes.Listar();
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");
@@ -414,6 +471,11 @@ namespace SistemaDeVentasV1.Controllers
         {
             try
             {
+
+                ViewBag.Clientes = daoClientes.Listar();
+                // para devolver la lista de productos
+                ViewBag.Productos = daoProductos.Listar();
+
                 int idProducto = Convert.ToInt32(form["idProducto"]);
                 decimal cantidad = Convert.ToDecimal(form["cantidad"]);
                 int id = Convert.ToInt32(form["idDetalle"]);
@@ -461,6 +523,7 @@ namespace SistemaDeVentasV1.Controllers
             catch
             {
                 ViewBag.Error = "No se logro editar el producto ";
+                ViewBag.Clientes = daoClientes.Listar();
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
                 return View("Facturar");

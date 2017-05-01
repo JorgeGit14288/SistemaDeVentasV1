@@ -67,7 +67,16 @@ namespace SistemaDeVentasV1.Dao
 
         public List<Clientes> Listar()
         {
-            throw new NotImplementedException();
+            List<Clientes> lista = new List<Clientes>();
+            try
+            {
+                lista = ctx.Clientes.ToList();
+                return lista;
+            }
+            catch
+            {
+                return lista;
+            }
         }
     }
 }

@@ -12,12 +12,10 @@ namespace SistemaDeVentasV1.Controllers
     public class AgregarCompraController : Controller
     {
         // objetos de acceso a datoa
-
         IProductosDao daoProductos = new ProductosDao();
         IComprasDao daoCompras = new ComprasDao();
         IAgregarComprasDao daoAgregarCompras = new AgregarComprasDao();
         private FacturacionDbEntities ctx = new FacturacionDbEntities();
-        
         // GET: AgregarCompra
         public ActionResult CrearCompra()
         {
@@ -279,147 +277,7 @@ namespace SistemaDeVentasV1.Controllers
                 return View("CrearCompra");
             }
         }
-        public ActionResult CargarProducto(FormCollection form)
-        {
-            // buscamos el producto
-            string idProducto = form["idProducto"];
-            decimal cantidad = Convert.ToDecimal(form["cantidad"]);
-            decimal precio = Convert.ToDecimal(form["precio"]);
-            decimal precioVenta = Convert.ToDecimal(form["precioVenta"]);
-
-            try
-            {
-                ViewBag.Proveedores = ctx.Proveedores.ToList();
-                ViewBag.Categorias = ctx.Categorias.ToList();
-                ViewBag.Productos = daoProductos.Listar();
-
-
-                // string observaciones= form["observaciones"];
-                Productos p = new Productos();
-                Compras compra = new Compras();
-                if (Session["Compra"] == null || Session["Compra"].ToString()=="")
-                {
-                    ViewBag.Mensaje = "Error, no se ha creado una compra para agregar productos";
-                    return View("CrearCompra");
-
-                }
-                compra = (Compras)Session["Compra"];
-                p = daoProductos.BuscarId(idProducto);
-
-                if (String.IsNullOrEmpty(p.idProducto))
-                {
-                    ViewBag.ErrorProducto = "No existe  el producto o la existencia es menor a la cantidad solicitada";
-                    ViewBag.Productos = daoProductos.Listar();
-                    return View("CrearCompra");
-                }
-                else
-                {
-
-                    // verificamos si existe algun detalle
-                    List<DetallesCompra> detalles = new List<DetallesCompra>();
-
-                    if (Session["detCompra"].ToString() == "")
-                    {
-
-                        // si no hay detalles no se hace nada, puesto que se creo el objeto arriba
-
-
-                    }
-                    else
-                    {
-
-                        // si existe detalle, lo pasamos a la variable local detalles
-                        detalles = (List<DetallesCompra>)Session["detCompra"];
-
-                    }
-                    // creamos un objeto temporal para saber si existe el detalle
-                    DetallesCompra temp = new DetallesCompra();
-                    temp = detalles.Find(r => r.idProducto == p.idProducto);
-                    if (temp == null)
-                    {
-                        // creamos un nuevo detalle, obtenemos el id de la factura
-                        // int idDetalle = Int32.Parse(Session["idDetalleC"].ToString());
-                        // iniciamos el contador para llenar la lista de detalles
-                        int idDetalle = Int32.Parse(Session["idDetalleC"].ToString()) + 1;
-
-                        //creamos el nuevo detalle
-                        DetallesCompra d = new DetallesCompra();
-                        d.idCompra = compra.idCompra;
-                        d.idDetalle = idDetalle;
-                        d.Productos = p;
-                        d.idProducto = p.idProducto;
-                        d.cantidad = cantidad;
-                        d.precio = precio;
-                        d.precioVenta = precioVenta;
-                        // d.observaciones = observaciones;
-                        d.subTotal = precio * cantidad;
-                        decimal totalCompra = 0;
-                        detalles.Add(d);
-                        if (Session["totalCompra"].ToString()==""|| Session["totalCompra"]==null)
-                        {
-
-                        }
-                        else
-                        {
-                           totalCompra = Decimal.Parse(Session["totalCompra"].ToString());
-                        }
-                       
-                        //decimal totalCompra = Convert.ToDecimal(Session["totalCompra"]);
-                        totalCompra = totalCompra + Convert.ToDecimal(d.subTotal);
-                        Session["totalCompra"] = totalCompra;
-                        //volvemos a parsear el al objeto sessio
-                        Session["idDetalleC"] = idDetalle;
-                        Session["detCompra"] = detalles;
-                        // para devolver la lista de productos
-                    }
-                    else
-                    {
-                        // el producto ya esta registrado en el detalle asi que solo actualizamos los datos
-
-                        // el producto ya existe en el detalle, entonces lo aumentamos
-
-                        if (temp.cantidad == cantidad && temp.precio == precio && temp.precioVenta == precioVenta)
-                        {
-                            ViewBag.Error = "Los datos ingresados son los mismos por tanto no se modifico el detalle";
-                            /// los datos ingresados son los mismos, por tanto no los cargamos ni modificamos el detalle
-
-                        }
-                        else
-                        {
-                            detalles.Remove(temp);
-                            temp.precio = precio;
-                            temp.precioVenta = precioVenta;
-                            temp.cantidad = temp.cantidad + cantidad;
-                            temp.subTotal = temp.cantidad * temp.precio;
-                            detalles.Add(temp);
-                            //recalculamos el total otra vez
-                            decimal totalCompra = 0;
-                            foreach (var i in detalles)
-                            {
-                                totalCompra = totalCompra + Convert.ToDecimal(i.subTotal);
-                            }
-                            Session["totalCompra"] = totalCompra;
-                            Session["detCompra"] = detalles;
-                            ViewBag.ErrorProducto = "se Modifico " + cantidad + " " + p.nombre + " precio Q" + p.precio + "sub Total  Q" + temp.subTotal;
-                            ViewBag.Mensaje = "Se modifico el detalle de la compra";
-                        }
-                    }
-                    ViewBag.Productos = daoProductos.Listar();
-                    return View("CrearCompra");
-                }
-                
-            }
-            catch
-            {
-                // para devolver la lista de productos
-                ViewBag.Proveedores = ctx.Proveedores.ToList();
-                ViewBag.Categorias = ctx.Categorias.ToList();
-                ViewBag.Productos = daoProductos.Listar();
-                ViewBag.Error = "No hay conexion con la base de datos";
-                ViewBag.ErrorProducto = "No se pudo agregar el producto";
-                return View("CrearCompra");
-            }
-        }
+       
         public ActionResult EliminarDetalle(FormCollection form, int id)
         {
             try
@@ -665,6 +523,147 @@ namespace SistemaDeVentasV1.Controllers
                 ViewBag.Proveedores = ctx.Proveedores.ToList();
                 ViewBag.Categorias = ctx.Categorias.ToList();
                 ViewBag.Productos = daoProductos.Listar();
+                return View("CrearCompra");
+            }
+        }
+        public ActionResult CargarProducto(FormCollection form)
+        {
+            // buscamos el producto
+            string idProducto = form["idProducto"];
+            decimal cantidad = Convert.ToDecimal(form["cantidad"]);
+            decimal precio = Convert.ToDecimal(form["precio"]);
+            decimal precioVenta = Convert.ToDecimal(form["precioVenta"]);
+
+            try
+            {
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
+                ViewBag.Productos = daoProductos.Listar();
+
+
+                // string observaciones= form["observaciones"];
+                Productos p = new Productos();
+                Compras compra = new Compras();
+                if (Session["Compra"] == null || Session["Compra"].ToString() == "")
+                {
+                    ViewBag.Mensaje = "Error, no se ha creado una compra para agregar productos";
+                    return View("CrearCompra");
+
+                }
+                compra = (Compras)Session["Compra"];
+                p = daoProductos.BuscarId(idProducto);
+
+                if (String.IsNullOrEmpty(p.idProducto))
+                {
+                    ViewBag.ErrorProducto = "No existe  el producto o la existencia es menor a la cantidad solicitada";
+                    ViewBag.Productos = daoProductos.Listar();
+                    return View("CrearCompra");
+                }
+                else
+                {
+
+                    // verificamos si existe algun detalle
+                    List<DetallesCompra> detalles = new List<DetallesCompra>();
+
+                    if (Session["detCompra"].ToString() == "")
+                    {
+
+                        // si no hay detalles no se hace nada, puesto que se creo el objeto arriba
+
+
+                    }
+                    else
+                    {
+
+                        // si existe detalle, lo pasamos a la variable local detalles
+                        detalles = (List<DetallesCompra>)Session["detCompra"];
+
+                    }
+                    // creamos un objeto temporal para saber si existe el detalle
+                    DetallesCompra temp = new DetallesCompra();
+                    temp = detalles.Find(r => r.idProducto == p.idProducto);
+                    if (temp == null)
+                    {
+                        // creamos un nuevo detalle, obtenemos el id de la factura
+                        // int idDetalle = Int32.Parse(Session["idDetalleC"].ToString());
+                        // iniciamos el contador para llenar la lista de detalles
+                        int idDetalle = Int32.Parse(Session["idDetalleC"].ToString()) + 1;
+
+                        //creamos el nuevo detalle
+                        DetallesCompra d = new DetallesCompra();
+                        d.idCompra = compra.idCompra;
+                        d.idDetalle = idDetalle;
+                        d.Productos = p;
+                        d.idProducto = p.idProducto;
+                        d.cantidad = cantidad;
+                        d.precio = precio;
+                        d.precioVenta = precioVenta;
+                        // d.observaciones = observaciones;
+                        d.subTotal = precio * cantidad;
+                        decimal totalCompra = 0;
+                        detalles.Add(d);
+                        if (Session["totalCompra"].ToString() == "" || Session["totalCompra"] == null)
+                        {
+
+                        }
+                        else
+                        {
+                            totalCompra = Decimal.Parse(Session["totalCompra"].ToString());
+                        }
+
+                        //decimal totalCompra = Convert.ToDecimal(Session["totalCompra"]);
+                        totalCompra = totalCompra + Convert.ToDecimal(d.subTotal);
+                        Session["totalCompra"] = totalCompra;
+                        //volvemos a parsear el al objeto sessio
+                        Session["idDetalleC"] = idDetalle;
+                        Session["detCompra"] = detalles;
+                        // para devolver la lista de productos
+                    }
+                    else
+                    {
+                        // el producto ya esta registrado en el detalle asi que solo actualizamos los datos
+
+                        // el producto ya existe en el detalle, entonces lo aumentamos
+
+                        if (temp.cantidad == cantidad && temp.precio == precio && temp.precioVenta == precioVenta)
+                        {
+                            ViewBag.Error = "Los datos ingresados son los mismos por tanto no se modifico el detalle";
+                            /// los datos ingresados son los mismos, por tanto no los cargamos ni modificamos el detalle
+
+                        }
+                        else
+                        {
+                            detalles.Remove(temp);
+                            temp.precio = precio;
+                            temp.precioVenta = precioVenta;
+                            temp.cantidad = temp.cantidad + cantidad;
+                            temp.subTotal = temp.cantidad * temp.precio;
+                            detalles.Add(temp);
+                            //recalculamos el total otra vez
+                            decimal totalCompra = 0;
+                            foreach (var i in detalles)
+                            {
+                                totalCompra = totalCompra + Convert.ToDecimal(i.subTotal);
+                            }
+                            Session["totalCompra"] = totalCompra;
+                            Session["detCompra"] = detalles;
+                            ViewBag.ErrorProducto = "se Modifico " + cantidad + " " + p.nombre + " precio Q" + p.precio + "sub Total  Q" + temp.subTotal;
+                            ViewBag.Mensaje = "Se modifico el detalle de la compra";
+                        }
+                    }
+                    ViewBag.Productos = daoProductos.Listar();
+                    return View("CrearCompra");
+                }
+
+            }
+            catch
+            {
+                // para devolver la lista de productos
+                ViewBag.Proveedores = ctx.Proveedores.ToList();
+                ViewBag.Categorias = ctx.Categorias.ToList();
+                ViewBag.Productos = daoProductos.Listar();
+                ViewBag.Error = "No hay conexion con la base de datos";
+                ViewBag.ErrorProducto = "No se pudo agregar el producto";
                 return View("CrearCompra");
             }
         }
