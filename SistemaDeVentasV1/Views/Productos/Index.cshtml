@@ -72,9 +72,9 @@
                     @{
                         if (item.existencia == 0)
                         {
-                            <form id="fCargarProducto" method="get" action="AgregarExistencia">
+                            <form id="fAgregarProducto" method="get" action="AgregarExistencia">
                                 <input type="hidden" name="id" id="id" value="@item.idProducto" />
-                                <input type="submit" value="Agregar" class="btn btn-danger" name="btnComprar" formaction="AgregarExistencia" />
+                                <input type="submit" value="Agregar" class="btn btn-danger" name="btnComprar" formaction="@Url.Action("BuscarProducto","AgregarCompra")" />
                             </form>
                         }
                         else

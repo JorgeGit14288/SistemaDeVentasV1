@@ -44,15 +44,17 @@
     <div class="col-md-12">
         <form id="fBuscarProducto" method="post" action="@Url.Action("BuscarProducto","AgregarCompra")" class="form-inline">
             <label> Producto:</label>
-            <input list="productos" name="id" id="id" class="form-control" required />
-            <datalist id="productos">
+            
+            <select class="selectpicker" data-live-search="true" id="id" name="id" required >
+                <option></option>
                 @{
                     foreach (var p in productos)
                     {
-                        <option value="@p.idProducto"> Id: @p.idProducto, Nombre: @p.nombre </option>
+                        <option value="@p.idProducto" data-subtext="@p.existencia" data-tokens="@p.idProducto @p.nombre" >  @p.idProducto, @p.nombre </option>
                     }
                 }
-            </datalist>
+            </select>
+            
             <input type="submit" value="Buscar" class="btn btn-info" />
         </form>
     </div>
@@ -148,4 +150,12 @@
     }
 }
 
+@section scripts{
+    <script>
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+    </script>
 
+}

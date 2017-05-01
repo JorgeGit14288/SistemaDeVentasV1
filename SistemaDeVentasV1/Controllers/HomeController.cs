@@ -27,5 +27,9 @@ namespace SistemaDeVentasV1.Controllers
 
             return View();
         }
+        public ActionResult Pruebas()
+        {
+            return View();
+        }
     }
 }

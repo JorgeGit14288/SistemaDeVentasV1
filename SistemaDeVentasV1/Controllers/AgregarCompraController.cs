@@ -483,7 +483,6 @@ namespace SistemaDeVentasV1.Controllers
         {
             try
             {
-
                 //Obtenemos el objeto de session de detalles
                 List<DetallesCompra> detalles = new List<DetallesCompra>();
                 detalles = (List<DetallesCompra>)Session["detCompra"];

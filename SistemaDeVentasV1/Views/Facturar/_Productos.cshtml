@@ -12,15 +12,15 @@
                 <div class="col-md-5">
                     <div class="form-group">
                         <label class="col-sm-6" for="idProducto">Producto:</label>
-                        <input list="productos" name="idProducto" id="idProducto"  class="form-control col-sm-4" required />
-                        <datalist id="productos">
+                        <select class="selectpicker form-control" data-live-search="true" id="idProducto" name="idProducto" required>
+                            <option></option>
                             @{
                                 foreach (var p in productos)
                                 {
-                                    <option value="@p.idProducto">@p.nombre @p.precio, @p.existencia </option>
+                                    <option value="@p.idProducto" data-subtext="Q. @p.precio" data-tokens="@p.idProducto @p.nombre">  @p.idProducto, @p.nombre </option>
                                 }
                             }
-                        </datalist>
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -72,4 +72,13 @@
                             </div>
 
                           }
+}
+@section scripts{
+    <script>
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+    </script>
+
 }

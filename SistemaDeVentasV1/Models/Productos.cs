@@ -31,6 +31,7 @@ namespace SistemaDeVentasV1.Models
         public Nullable<System.DateTime> modificado { get; set; }
         public Nullable<decimal> precioCompra { get; set; }
         public Nullable<int> idCategoria { get; set; }
+        public Nullable<decimal> descuentoVenta { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Detalles> Detalles { get; set; }

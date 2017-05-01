@@ -12,6 +12,7 @@
           <Property Name="idCategoria" Type="int" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="descripcion" Type="varchar" MaxLength="300" />
+          <Property Name="imagen" Type="image" />
         </EntityType>
         <EntityType Name="Clientes">
           <Key>
@@ -73,7 +74,7 @@
           <Property Name="direccion" Type="varchar" MaxLength="50" />
           <Property Name="fecha" Type="datetime" Nullable="false" />
           <Property Name="subTotal" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="descuento" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="descuento" Type="decimal" Precision="2" Scale="2" />
           <Property Name="total" Type="decimal" Precision="9" Scale="2" />
           <Property Name="usuario" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -85,6 +86,7 @@
           <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="precioCompra" Type="decimal" Precision="10" Scale="2" />
           <Property Name="precio" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="descuentoVenta" Type="decimal" Precision="2" Scale="2" />
           <Property Name="existencia" Type="decimal" Precision="9" Scale="2" />
           <Property Name="observacion" Type="varchar" MaxLength="200" />
           <Property Name="idCategoria" Type="int" />
@@ -431,7 +433,7 @@
           <NavigationProperty Name="Detalles" Relationship="Self.FK_Detalles_Facturas" FromRole="Facturas" ToRole="Detalles" />
           <NavigationProperty Name="Clientes" Relationship="FacturacionDbModel.FK_Facturas_Clientes" FromRole="Facturas" ToRole="Clientes" />
           <Property Name="subTotal" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="descuento" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="descuento" Type="Decimal" Precision="2" Scale="2" />
         </EntityType>
         <EntityType Name="Productos">
           <Key>
@@ -450,6 +452,7 @@
           <Property Name="precioCompra" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="idCategoria" Type="Int32" />
           <NavigationProperty Name="Categorias" Relationship="FacturacionDbModel.FK_Productos_Categorias" FromRole="Productos" ToRole="Categorias" />
+          <Property Name="descuentoVenta" Type="Decimal" Precision="2" Scale="2" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
@@ -860,6 +863,7 @@
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="descripcion" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Productos" Relationship="FacturacionDbModel.FK_Productos_Categorias" FromRole="Categorias" ToRole="Productos" />
+          <Property Name="imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_Productos_Categorias">
           <End Type="FacturacionDbModel.Categorias" Role="Categorias" Multiplicity="0..1" />
@@ -922,6 +926,7 @@
           <EntitySetMapping Name="Productos">
             <EntityTypeMapping TypeName="FacturacionDbModel.Productos">
               <MappingFragment StoreEntitySet="Productos">
+                <ScalarProperty Name="descuentoVenta" ColumnName="descuentoVenta" />
                 <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />
                 <ScalarProperty Name="precioCompra" ColumnName="precioCompra" />
                 <ScalarProperty Name="modificado" ColumnName="modificado" />
@@ -1156,6 +1161,7 @@
           <EntitySetMapping Name="Categorias">
             <EntityTypeMapping TypeName="FacturacionDbModel.Categorias">
               <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="imagen" ColumnName="imagen" />
                 <ScalarProperty Name="descripcion" ColumnName="descripcion" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />
                 <ScalarProperty Name="idCategoria" ColumnName="idCategoria" />

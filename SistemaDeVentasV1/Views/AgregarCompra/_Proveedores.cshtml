@@ -27,15 +27,16 @@
         <form id="fBuscarProveedor" action="BuscarProveedor" method="post" class="form-inline">
             <div class="form-group">
                 <label >Proveedor:</label>
-                <input list="proveedores" name="idProveedor" id="idProveedor" placeholder="Id o Empresa" class="form-control" required />
-                <datalist id="proveedores">
+                <select class="selectpicker" data-live-search="true" id="idProveedor" name="idProveedor" required>
+                    <option></option>
                     @{
                         foreach (var p in proveedores)
                         {
-                            <option value="@p.idProveedor">@p.empresa ,  @p.nombre</option>
+                            <option value="@p.idProveedor" data-subtext="@p.direccion" data-tokens="@p.idProveedor @p.nombre @p.empresa">  @p.idProveedor, @p.empresa , @p.nombre </option>
                         }
                     }
-                </datalist>
+                </select>
+                
                 <input type="submit" value="Buscar" class="btn btn-info" />
             </div>
         </form>
@@ -103,3 +104,12 @@
         </form>
     </div>
 </div>
+@section scripts{
+    <script>
+        $('.selectpicker').selectpicker({
+            style: 'btn-info',
+            size: 10
+        });
+    </script>
+
+}
