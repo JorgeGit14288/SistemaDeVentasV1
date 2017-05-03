@@ -267,6 +267,7 @@ namespace SistemaDeVentasV1.Controllers
                 // buscamos el producto
                 string idProducto = form["idProducto"];
                 decimal cantidad = Convert.ToDecimal (form["cantidad"]);
+                decimal descuento = Convert.ToDecimal(form["descuento"]);
                 Productos p = new Productos() ;
                 p = daoProductos.BuscarId(idProducto);
                 ViewBag.Clientes = daoClientes.Listar();
@@ -328,9 +329,24 @@ namespace SistemaDeVentasV1.Controllers
                                 cantidad = cantidad,
                                 Productos = p
                             };
+                            if (descuento>0)
+                            {
+                                decimal desc = (descuento / 100);
+                                decimal descontado= d.precio * desc;
+                                decimal prec = d.precio - descontado;
+                                d.subTotal = prec * d.cantidad;
+                                 
+                            }
+                            else
+                            {
+                                d.subTotal = d.cantidad * d.precio;
+                            }
                             //d.Productos.nombre = p.nombre;
-                            d.subTotal = d.precio * d.cantidad;
+                            d.descuento = descuento;
+                          //  d.descuento = desc;
                             detalles.Add(d);
+                    
+                                   
                             decimal totalFactura = Convert.ToDecimal(Session["totalFactura"]);
                             totalFactura = totalFactura + Convert.ToDecimal(d.subTotal);
                             Session["totalFactura"] = totalFactura;
@@ -451,6 +467,7 @@ namespace SistemaDeVentasV1.Controllers
                 ViewBag.modIdProducto = d.idProducto;
                 ViewBag.modCantidad = d.cantidad;
                 ViewBag.modIdDetalle = d.idDetalle;
+                ViewBag.modDescuento = d.descuento;
                 ViewBag.ErrorProducto = "Se elimino =" + d.Productos.nombre;
                 // para devolver la lista de productos
                 ViewBag.Productos = daoProductos.Listar();
@@ -478,6 +495,7 @@ namespace SistemaDeVentasV1.Controllers
 
                 int idProducto = Convert.ToInt32(form["idProducto"]);
                 decimal cantidad = Convert.ToDecimal(form["cantidad"]);
+                decimal descuento = Convert.ToDecimal(form["descuento"]);
                 int id = Convert.ToInt32(form["idDetalle"]);
 
                 //Obtenemos el objeto de session de detalles
@@ -502,8 +520,11 @@ namespace SistemaDeVentasV1.Controllers
                     //eliminamos el objeto de la lista
                     detalles.Remove(d);
                     //obteniendo el producto devolvemos la cantidad y el ID para poder ser Modificados
+                    d.descuento = descuento;
+                    decimal tempDesc = descuento / 100;
+                    decimal tempPrecio = d.precio * tempDesc;
                     d.cantidad = cantidad;
-                    d.subTotal = cantidad * d.precio;
+                    d.subTotal = cantidad * tempPrecio;
                     detalles.Add(d);
 
                     //calculamos el nuevo total de la factura

@@ -21,6 +21,9 @@
                 Nombre
             </th>
             <th>
+                Categoria
+            </th>
+            <th>
                Precio
             </th>
             <th>
@@ -41,7 +44,11 @@
                     @Html.DisplayFor(modelItem => item.nombre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.precio)
+                    @Html.DisplayFor(modelItem => item.Categorias.nombre)
+                </td>
+                
+                <td>
+                  Q.  @Html.DisplayFor(modelItem => item.precio)
                 </td>
                 <td>
                     @{

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SistemaDeVentasV1.Models;
+using System.IO;
 
 namespace SistemaDeVentasV1.Controllers
 {
@@ -46,8 +47,20 @@ namespace SistemaDeVentasV1.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "idCategoria,nombre,descripcion")] Categorias categorias)
+        public ActionResult Create([Bind(Include = "idCategoria,nombre,descripcion")] Categorias categorias, HttpPostedFileBase imagen)
         {
+
+            if (imagen != null && imagen.ContentLength > 0)
+            {
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(imagen.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(imagen.ContentLength);
+                }
+                //setear la imagen a la entidad que se creara
+                categorias.imagen = imageData;              
+            }
+
             if (ModelState.IsValid)
             {
                 db.Categorias.Add(categorias);
@@ -78,8 +91,20 @@ namespace SistemaDeVentasV1.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "idCategoria,nombre,descripcion")] Categorias categorias)
+        public ActionResult Edit([Bind(Include = "idCategoria,nombre,descripcion")] Categorias categorias, HttpPostedFileBase imagen)
         {
+
+
+            if (imagen != null && imagen.ContentLength > 0)
+            {
+                byte[] imageData = null;
+                using (var binaryReader = new BinaryReader(imagen.InputStream))
+                {
+                    imageData = binaryReader.ReadBytes(imagen.ContentLength);
+                }
+                //setear la imagen a la entidad que se creara
+                categorias.imagen = imageData;
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(categorias).State = EntityState.Modified;
@@ -113,6 +138,13 @@ namespace SistemaDeVentasV1.Controllers
             db.Categorias.Remove(categorias);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult ConertirImagen(int idCategoria)
+        {
+            var imagen = db.Categorias.Where(c => c.idCategoria == idCategoria).FirstOrDefault();
+        
+            return File(imagen.imagen, "image/jpeg");
+
         }
 
         protected override void Dispose(bool disposing)

@@ -64,6 +64,8 @@ namespace SistemaDeVentasV1.Controllers
                 //setear la imagen a la entidad que se creara
                 productos.imagen = imageData;
             }
+            productos.existencia = 0;
+            productos.precioCompra = 0;
 
             if (ModelState.IsValid)
             {
@@ -267,8 +269,12 @@ namespace SistemaDeVentasV1.Controllers
         public ActionResult ConertirImagen(string idProducto)
         {
             var imagen = db.Productos.Where(p => p.idProducto == idProducto).FirstOrDefault();
-            return File(imagen.imagen, "image/jpeg");
+            return File(imagen.imagen, "image/png");
+
         }
+        
+
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -26,6 +26,9 @@ namespace SistemaDeVentasV1
             Session["idDetalle"] = "0";
             Session["Usuario"] = "";
             Session["totalFactura"] = "0";
+            Session["totalSinDescuento"] = "0";
+            Session["subTotal"] = 0;
+            Session["Iva"] = "0";
 
             //PARA COMPRAS
             Session["Comprar"] = "";

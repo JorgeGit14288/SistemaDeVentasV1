@@ -35,6 +35,13 @@
         <dd>
             @Html.DisplayFor(model => model.descripcion)
         </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.imagen)
+        </dt>
+
+        <dd>
+            <img width="280" height="250" src="@Url.Action("ConvertirImagen", "Categorias", new {idCategoria = Model.idCategoria})" />
+        </dd>
 
     </dl>
 </div>

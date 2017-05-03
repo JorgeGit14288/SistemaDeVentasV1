@@ -42,7 +42,9 @@
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="cantidad">Cantidad:</label>
-                                <input type="number" name="cantidad" id="cantidad" min="1" class="form-control" max="9999" size="6" required />
+                                <input type="number" step="any" name="cantidad" id="cantidad" min="1" class="form-control" max="9999" size="6" required />
+                                <label for="Descuento">Descuento:</label>
+                                <input type="number"  name="descuento" id="descuento" value="0" min="0" maxlength="2"  max="99" size="6" required />
                                 <input type="submit" value="Agregar" id="btnAgregarProducto" formaction="~/Facturar/CargarProducto" class="btn btn-success" />
                                 <a href="@Url.Action("Index","Productos")" class="btn btn-info">Ver Productos</a>
                             </div>
@@ -54,6 +56,7 @@
             }
             else
             {
+                
                 <form class="form-inline" id="formCargarProductos" method="post" action="AgregarProducto">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -61,7 +64,9 @@
                                 <label >Id Prod:</label>
                                 <input type="text" name="idProducto" id="idProducto" value="@ViewBag.modIdProducto" class="form-control"  required readonly />
                                 <label for="cantidad">Cantidad:</label>
-                                <input type="number" name="cantidad" id="cantidad" min="1" value="@ViewBag.modCantidad" max="9999" class=" form-control" required />
+                                <input type="number" name="cantidad" id="cantidad" min="1"  value="@ViewBag.modCantidad" max="9999" class=" form-control" required />
+                               <label for="descuento">Descuento:</label>
+                              <input type="number" name="descuento" id="descuento" min="0" value="@ViewBag.modDescuento" max="99" class=" form-control" required />
                                 <input type="hidden" name="idDetalle" id="idDetalle" value="@ViewBag.modIdDetalle" />
                                 <input type="submit" value="Modificar" id="btnAgregarProducto" formaction="~/Facturar/EditarDetalle" class="btn btn-success" />
                                 <input type="submit" value="Cancelar" id="btnCancelarEdicion" formaction="~/Facturar/CancelarEdicion" class="btn btn-danger" />

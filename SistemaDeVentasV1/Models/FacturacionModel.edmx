@@ -48,6 +48,7 @@
           <Property Name="idProducto" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="cantidad" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="precio" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="descuento" Type="decimal" Precision="2" Scale="2" />
           <Property Name="subTotal" Type="decimal" Precision="9" Scale="2" />
         </EntityType>
         <EntityType Name="DetallesCompra">
@@ -61,6 +62,7 @@
           <Property Name="cantidad" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="precio" Type="decimal" Precision="10" Scale="2" />
           <Property Name="precioVenta" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="descuento" Type="decimal" Precision="2" Scale="2" />
           <Property Name="subTotal" Type="decimal" Precision="10" Scale="2" />
           <Property Name="observaciones" Type="varchar" MaxLength="200" />
         </EntityType>
@@ -418,6 +420,7 @@
           <Property Name="subTotal" Type="Decimal" Precision="9" Scale="2" />
           <NavigationProperty Name="Facturas" Relationship="Self.FK_Detalles_Facturas" FromRole="Detalles" ToRole="Facturas" />
           <NavigationProperty Name="Productos" Relationship="Self.FK_Detalles_Productos" FromRole="Detalles" ToRole="Productos" />
+          <Property Name="descuento" Type="Decimal" Precision="2" Scale="2" />
         </EntityType>
         <EntityType Name="Facturas">
           <Key>
@@ -804,6 +807,7 @@
           <NavigationProperty Name="Compras" Relationship="FacturacionDbModel.FK_DetallesCompra_Compras" FromRole="DetallesCompra" ToRole="Compras" />
           <NavigationProperty Name="Productos" Relationship="FacturacionDbModel.FK_DetallesCompra_Productos" FromRole="DetallesCompra" ToRole="Productos" />
           <Property Name="precioVenta" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="descuento" Type="Decimal" Precision="2" Scale="2" />
         </EntityType>
         <EntityType Name="Proveedores">
           <Key>
@@ -899,6 +903,7 @@
           <EntitySetMapping Name="Detalles">
             <EntityTypeMapping TypeName="FacturacionDbModel.Detalles">
               <MappingFragment StoreEntitySet="Detalles">
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
                 <ScalarProperty Name="idDetalle" ColumnName="idDetalle" />
                 <ScalarProperty Name="idFactura" ColumnName="idFactura" />
                 <ScalarProperty Name="idProducto" ColumnName="idProducto" />
@@ -1133,6 +1138,7 @@
           <EntitySetMapping Name="DetallesCompra">
             <EntityTypeMapping TypeName="FacturacionDbModel.DetallesCompra">
               <MappingFragment StoreEntitySet="DetallesCompra">
+                <ScalarProperty Name="descuento" ColumnName="descuento" />
                 <ScalarProperty Name="precioVenta" ColumnName="precioVenta" />
                 <ScalarProperty Name="observaciones" ColumnName="observaciones" />
                 <ScalarProperty Name="subTotal" ColumnName="subTotal" />

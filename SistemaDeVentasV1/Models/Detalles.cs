@@ -20,6 +20,7 @@ namespace SistemaDeVentasV1.Models
         public decimal cantidad { get; set; }
         public decimal precio { get; set; }
         public Nullable<decimal> subTotal { get; set; }
+        public Nullable<decimal> descuento { get; set; }
     
         public virtual Facturas Facturas { get; set; }
         public virtual Productos Productos { get; set; }

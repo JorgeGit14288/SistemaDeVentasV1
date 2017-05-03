@@ -44,7 +44,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.precioCompra, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.precioCompra, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                            @Html.EditorFor(model => model.precioCompra, new { htmlAttributes = new { @class = "form-control", @readonly ="true", @placeholder="Al ingresar una compra podra ingresar este campo" } })
                             @Html.ValidationMessageFor(model => model.precioCompra, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.precio, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                            @Html.EditorFor(model => model.precio, new { htmlAttributes = new { @class = "form-control", @placeholder = "Al ingresar una compra podra ingresar este campo" } })
                             @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.existencia, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.existencia, new { htmlAttributes = new { @class = "form-control", @required = "true" } })
+                            @Html.EditorFor(model => model.existencia, new { htmlAttributes = new { @class = "form-control", @readonly = "true", @placeholder = "Al ingresar una compra podra ingresar este campo" } })
                             @Html.ValidationMessageFor(model => model.existencia, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -81,7 +81,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input type="submit" value="Crear Producto" class="btn btn-primary" />
                         </div>
                     </div>
                 </div>

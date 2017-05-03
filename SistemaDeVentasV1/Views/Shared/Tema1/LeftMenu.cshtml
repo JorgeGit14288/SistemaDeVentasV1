@@ -34,15 +34,10 @@
                     <i class="fa fa-dashboard"></i> <span>Inicio</span>
                 </a>
             </li>
-            <li class="treeview bg-red-gradienct">
-                <a href="@Url.Action("Index","DetallesCompras")">
-                    <i class="fa fa-cart-plus"></i> <span>Detalles compras temp</span>
-                </a>
-            </li>
-
+            
             <li class="treeview bg-red-gradient">
                 <a href="@Url.Action("Facturar","Facturar")">
-                    <i class="fa fa-cart-plus"></i> <span>Factuar Venta</span>
+                    <i class="fa fa-cart-plus"></i> <span>Nueva venta</span>
                 </a>
             </li>
             <li class="treeview">
@@ -62,6 +57,11 @@
                     <li><a href="@Url.Action("FacturasPorFecha","Facturas")"><i class="fa fa-circle-o"></i>Facturas por fecha</a></li>                   
                 </ul>
             </li>
+            <li class="treeview bg-blue-gradient">
+                <a href="@Url.Action("CrearCompra","AgregarCompra")">
+                    <i class="fa fa-cart-plus"></i> <span>Ingresar Mercaderia</span>
+                </a>
+            </li>
             <li class="treeview">
                 <a href="">
                     <i class="fa fa-bookmark"></i>
@@ -73,7 +73,6 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="@Url.Action("CrearCompra","AgregarCompra")"><i class="fa fa-circle-o"></i>Ingresar Compra</a></li>
                     <li><a href="@Url.Action("Index","Compras")"><i class="fa fa-circle-o"></i>Todas las compras</a></li>
                     <li><a href="@Url.Action("ComprasMes","Compras")"><i class="fa fa-circle-o"></i>Compras del mes</a></li>
                     <li><a href="@Url.Action("BuscarCompras","Compras")"><i class="fa fa-circle-o"></i>Busqueda por fechas</a></li>
@@ -92,8 +91,7 @@
                 <ul class="treeview-menu">
                     <li><a href="@Url.Action("Index","Productos")"><i class="fa fa-circle-o"></i> Productos Existentes</a></li>
                     <li><a href="@Url.Action("Create","Productos")"><i class="fa fa-circle-o"></i> Registrar Nuevo</a></li>
-                    <li><a href="@Url.Action("AgregarExistencia","Productos")"><i class="fa fa-circle-o"></i>Agregar Existencia</a></li>
-                    <li><a href="@Url.Action("Index","Categorias")"><i class="fa fa-circle-o"></i>Ver Categorias</a></li>                                                                                         
+                    <li><a href="@Url.Action("Index","Categorias")"><i class="fa fa-circle-o"></i>Categorias</a></li>                                                                                         
                     
                 </ul>
             </li>

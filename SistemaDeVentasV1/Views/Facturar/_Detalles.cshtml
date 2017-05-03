@@ -32,6 +32,9 @@
                         Precio
                     </th>
                     <th>
+                        Descuento
+                    </th>
+                    <th>
                         SubTotal
                     </th>
                     <th></th>
@@ -53,10 +56,13 @@
                             @Html.DisplayFor(modelItem => item.Productos.nombre)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.precio)
+                          Q. @Html.DisplayFor(modelItem => item.precio)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.subTotal)
+                            @Html.DisplayFor(modelItem => item.descuento) %
+                        </td>
+                        <td>
+                          Q. @Html.DisplayFor(modelItem => item.subTotal)
                         </td>
 
 
