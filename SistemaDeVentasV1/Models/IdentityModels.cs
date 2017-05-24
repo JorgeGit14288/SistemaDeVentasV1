@@ -23,6 +23,7 @@ namespace SistemaDeVentasV1.Models
         public ApplicationDbContext()
             : base("FacturacionUsers", throwIfV1Schema: false)
         {
+
         }
 
         public static ApplicationDbContext Create()

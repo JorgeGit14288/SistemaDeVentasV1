@@ -12,10 +12,13 @@ namespace SistemaDeVentasV1.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuarios
+    public partial class AspNetUserClaims
     {
-        public string email { get; set; }
-        public string pass { get; set; }
-        public string nombre { get; set; }
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string ClaimType { get; set; }
+        public string ClaimValue { get; set; }
+    
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

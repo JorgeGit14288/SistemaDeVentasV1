@@ -12,7 +12,7 @@ namespace SistemaDeVentasV1.Controllers
     {
         // objetos de acceso a datoa
         IFacturarDao daoFacturar = new FacturarDao();
-        IIFacturasDao daoFacturas = new FacturasDao();
+        IFacturasDao daoFacturas = new FacturasDao();
         IClientesDao daoClientes = new ClientesDao();
         IProductosDao daoProductos = new ProductosDao();
 

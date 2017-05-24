@@ -224,6 +224,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AspNetRoles.cs">
+      <DependentUpon>FacturacionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserClaims.cs">
+      <DependentUpon>FacturacionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUserLogins.cs">
+      <DependentUpon>FacturacionModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AspNetUsers.cs">
+      <DependentUpon>FacturacionModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Categorias.cs">
       <DependentUpon>FacturacionModel.tt</DependentUpon>
     </Compile>
@@ -306,9 +318,6 @@
     <Compile Include="Models\sp_ListarUsuarios_Result.cs">
       <DependentUpon>FacturacionModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuarios.cs">
-      <DependentUpon>FacturacionModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -352,6 +361,8 @@
     </Content>
     <Content Include="Scripts\bootstrap-select.js.map" />
     <Content Include="Content\bootstrap-select.css.map" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -1553,7 +1564,9 @@
     <Content Include="Temas\Plantilla\plugins\timepicker\bootstrap-timepicker.min.css" />
     <Content Include="Temas\Plantilla\plugins\timepicker\bootstrap-timepicker.min.js" />
     <Content Include="Temas\Plantilla\starter.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1806,6 +1819,7 @@
     <Content Include="Temas\Plantilla\plugins\bootstrap-select-1.12.2\sass\bootstrap-select.scss" />
     <Content Include="Temas\Plantilla\plugins\bootstrap-select-1.12.2\sass\variables.scss" />
     <Content Include="Views\Home\Pruebas.cshtml" />
+    <Content Include="Views\Facturas\FacturasHoy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,151 @@
+﻿@model IEnumerable<SistemaDeVentasV1.Models.Facturas>
+
+@{
+    ViewBag.Title = "FacturasHoy";
+    ViewBag.TituloVentana = "Lista de Facturas por dia";
+    ViewBag.InfoPagina = "Muestra las facturas realizadas en cierto dia";
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" method="get" name="fBuscarFecha" action="@Url.Action("FacturasHoy","Facturas")">
+            <div class="col-md-4">
+
+            </div>
+            <div class="form-group">
+                    <label>Date:</label>
+                    <div class="input-group date">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar"></i>
+                        </div>
+                        <input type="text" name="fecha" value="@DateTime.Now.Date"  class="form-control pull-right" id="fecha">
+                    </div>
+                    <!-- /.input group -->
+
+            </div>
+            <input type="submit" value="Buscar" class="btn btn-primary" />
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.idFactura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.usuario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.subTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.descuento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Clientes.nombre)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.idFactura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.subTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.descuento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Clientes.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idFactura }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idFactura }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idFactura })
+        </td>
+    </tr>
+}
+
+</table>
+@section scripts{
+    <script>
+        $(function () {
+            //Initialize Select2 Elements
+            $(".select2").select2();
+
+            //Datemask dd/mm/yyyy
+            $("#datemask").inputmask("dd/mm/yyyy", { "placeholder": "dd/mm/yyyy" });
+            //Datemask2 mm/dd/yyyy
+            $("#datemask2").inputmask("mm/dd/yyyy", { "placeholder": "mm/dd/yyyy" });
+            //Money Euro
+            $("[data-mask]").inputmask();
+
+            //Date range picker
+            $('#reservation').daterangepicker();
+            //Date range picker with time picker
+            $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A' });
+            //Date range as a button
+            $('#daterange-btn').daterangepicker(
+                {
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                }
+            );
+
+            //Date picker
+            $('#fecha').datepicker({
+                autoclose: true
+            });
+
+
+
+        });
+
+
+
+    </script>
+    
+    }

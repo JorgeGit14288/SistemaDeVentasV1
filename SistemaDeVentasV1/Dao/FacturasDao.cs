@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using SistemaDeVentasV1.Models;
+using System.Data.Entity;
 
 namespace SistemaDeVentasV1.Dao
 {
-    public class FacturasDao : IIFacturasDao
+    public class FacturasDao : IFacturasDao
     {
         FacturacionDbEntities ctx = new FacturacionDbEntities();
         public bool Actualizar(Facturas a)
@@ -65,7 +66,16 @@ namespace SistemaDeVentasV1.Dao
 
         public List<Facturas> ListarFacturasHoy(DateTime fecha)
         {
-            throw new NotImplementedException();
+            try
+            {
+               
+                List<Facturas> lista = ctx.Facturas.Where(f => DbFunctions.TruncateTime(f.fecha) == DbFunctions.TruncateTime(fecha)).ToList();
+                return lista;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

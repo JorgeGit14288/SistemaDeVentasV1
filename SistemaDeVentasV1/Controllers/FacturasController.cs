@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SistemaDeVentasV1.Models;
+using SistemaDeVentasV1.Dao;
 
 namespace SistemaDeVentasV1.Controllers
 {
     public class FacturasController : Controller
     {
         private FacturacionDbEntities db = new FacturacionDbEntities();
+        IFacturasDao daoFacturas = new FacturasDao();
         // GET: Facturas
         public ActionResult Index()
         {
@@ -136,6 +138,18 @@ namespace SistemaDeVentasV1.Controllers
             db.Facturas.Remove(facturas);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        public ActionResult FacturasHoy(FormCollection form)
+        {
+            DateTime fecha = Convert.ToDateTime(form["fecha"]);
+         
+            List<Facturas> lista = new List<Facturas>();
+        
+            fecha = DateTime.Now.Date;
+          
+            ViewBag.Fecha = fecha;
+            lista = daoFacturas.ListarFacturasHoy(fecha);
+            return View(lista);
         }
 
         protected override void Dispose(bool disposing)

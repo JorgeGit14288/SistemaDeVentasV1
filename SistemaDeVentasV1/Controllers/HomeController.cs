@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace SistemaDeVentasV1.Controllers
 {
@@ -10,7 +11,8 @@ namespace SistemaDeVentasV1.Controllers
     {
         public ActionResult Index()
         {
-            ViewBag.Mensaje = "Este es un mensaje del controlador";
+            ViewBag.Usuario = User.Identity.GetUserName();
+            ViewBag.Mensaje = "Ingreso Exitoso";
             return View();
         }
 

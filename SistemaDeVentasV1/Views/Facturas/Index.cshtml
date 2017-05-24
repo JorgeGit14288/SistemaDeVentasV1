@@ -78,9 +78,9 @@
                     @Html.DisplayFor(modelItem => item.total)
                 </td>
                 <td>
-                    <form id="fDetalles" action="Details" method="get">
+                    <form id="fDetalles" action="@Url.Action("Details","Facturas")" method="get">
                         <input type="hidden" id="id" name="id" value="@item.idFactura" />
-                        <input type="submit" id="btnDetalles" value="Ver Detalles" formaction="Details" class="btn btn-info" />
+                        <input type="submit" id="btnDetalles" value="Ver Detalles" class="btn btn-info" />
                     </form>
                 </td>
                </tr>

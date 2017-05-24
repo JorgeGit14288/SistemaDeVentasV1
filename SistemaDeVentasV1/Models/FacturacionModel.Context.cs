@@ -31,11 +31,14 @@ namespace SistemaDeVentasV1.Models
         public virtual DbSet<Detalles> Detalles { get; set; }
         public virtual DbSet<Facturas> Facturas { get; set; }
         public virtual DbSet<Productos> Productos { get; set; }
-        public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Compras> Compras { get; set; }
         public virtual DbSet<DetallesCompra> DetallesCompra { get; set; }
         public virtual DbSet<Proveedores> Proveedores { get; set; }
         public virtual DbSet<Categorias> Categorias { get; set; }
+        public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
     
         public virtual int sp_ActualizarCliente(string nit, string nombre, string direccion, string telefono)
         {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SistemaDeVentasV1.Dao
 {
-    interface IIFacturasDao
+   public interface IFacturasDao
     {
         bool Crear(Facturas f);
         bool Actualizar(Facturas a);

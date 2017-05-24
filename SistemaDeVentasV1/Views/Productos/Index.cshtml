@@ -80,24 +80,24 @@
                     @{
                         if (item.existencia == 0)
                         {
-                            <form id="fAgregarProducto" method="get" action="AgregarExistencia">
+                            <form id="fAgregarProducto" method="get" action="@Url.Action("BuscarProducto","AgregarCompra")">
                                 <input type="hidden" name="id" id="id" value="@item.idProducto" />
-                                <input type="submit" value="Agregar" class="btn btn-danger" name="btnComprar" formaction="@Url.Action("BuscarProducto","AgregarCompra")" />
+                                <input type="submit" value="Agregar" class="btn btn-danger" name="btnComprar"  />
                             </form>
                         }
                         else
                         {
-                            <form id="fCargarProducto" method="post" action="CargarProducto">
+                            <form id="fCargarProducto" method="post"  action="@Url.Action("CargarProducto","Facturar")">
                                 <input type="hidden" name="idProducto" id="idProducto" value="@item.idProducto" />
                                 <input type="number" size="6" min="1" max="999" name="cantidad" id="cantidad" required />
-                                <input type="submit" value="Comprar" name="btnComprar" class="btn btn-success" formaction="CargarProducto" />
+                                <input type="submit" value="Comprar" name="btnComprar" class="btn btn-success" />
                             </form>
                         }
                     }
                    
                 </td>
                 <td>
-                    <form id="fDetalles" method="get" action="Details">
+                    <form id="fDetalles" method="get" action="@Url.Action("Details","Productos")">
                         <input type="hidden" name="id" id="id" value="@item.idProducto" />
                         
                         <input type="submit" value="Ver Detalles" name="btnDetalles" class="btn btn-info"  />

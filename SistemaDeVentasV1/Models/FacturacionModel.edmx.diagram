@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="FacturacionDbModel.Detalles" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FacturacionDbModel.Facturas" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="FacturacionDbModel.Productos" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="FacturacionDbModel.Usuarios" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="FacturacionDbModel.FK_Detalles_Facturas" ManuallyRouted="false" />
         <AssociationConnector Association="FacturacionDbModel.FK_Detalles_Productos" ManuallyRouted="false" />
         <AssociationConnector Association="FacturacionDbModel.FK_Facturas_Clientes" />
@@ -21,6 +20,13 @@
         <AssociationConnector Association="FacturacionDbModel.FK_DetallesCompra_Productos" />
         <EntityTypeShape EntityType="FacturacionDbModel.Categorias" Width="1.5" PointX="0.75" PointY="13.875" />
         <AssociationConnector Association="FacturacionDbModel.FK_Productos_Categorias" />
+        <EntityTypeShape EntityType="FacturacionDbModel.AspNetRoles" Width="1.5" PointX="7.375" PointY="5.5" />
+        <EntityTypeShape EntityType="FacturacionDbModel.AspNetUserClaims" Width="1.5" PointX="11.875" PointY="4" />
+        <EntityTypeShape EntityType="FacturacionDbModel.AspNetUserLogins" Width="1.5" PointX="11.875" PointY="6.75" />
+        <EntityTypeShape EntityType="FacturacionDbModel.AspNetUsers" Width="1.5" PointX="9.625" PointY="4.375" />
+        <AssociationConnector Association="FacturacionDbModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="FacturacionDbModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="FacturacionDbModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
