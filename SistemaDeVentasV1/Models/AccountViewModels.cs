@@ -79,6 +79,21 @@ namespace SistemaDeVentasV1.Models
         [Display(Name = "Confirmar contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña y la contraseña de confirmación no coinciden.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Nombre de Usuario")]
+        public string nombre { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        [Display(Name = "Direccion")]
+        public string direccion { get; set; }
+
+        [Required]
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Telefono")]
+        public string PhoneNumber { get; set; }
     }
 
     public class ResetPasswordViewModel

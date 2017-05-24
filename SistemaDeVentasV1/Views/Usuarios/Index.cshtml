@@ -1,0 +1,127 @@
+﻿@model IEnumerable<SistemaDeVentasV1.Models.AspNetUsers>
+
+@{
+    ViewBag.Title = "Usuarios ";
+    ViewBag.TituloControlador = "USUARIOS";
+    ViewBag.InfoPagina = "Usuarios con acceso al sistema";
+    ViewBag.TituloVentana = "Registros";
+    ViewBag.FooterVentana = "Es posible que no se permita la eliminacion de estos registros para conservar la integridad de la base de datos";
+
+    Layout = "~/Views/Shared/Plantilla1.cshtml";
+}
+<p>
+    <a href="@Url.Action("Create","Usuarios")" class="btn btn-primary" role="button">Crear Nuevo</a>
+</p>
+<table class="table table-responsive table-hover" id="tUsuarios" >
+    <thead>
+        <tr>
+            <th>
+                Login
+            </th>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Direccion
+            </th>
+
+            <th>
+                Telefono
+            </th>
+            <th>
+                Rol
+            </th>
+            <th>
+                Activo
+            </th>
+
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.AspNetRoles)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                </td>
+                <td>
+                    <input type="button" class="btn btn-info" value="Detalles" onclick="location.href='@Url.Action("Details", "Usuarios", new {id = item.Id})'" />
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('#tUsuarios').DataTable({
+                "language": {
+
+                    "sProcessing": "Procesando...",
+
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+
+                    "sZeroRecords": "No se encontraron resultados",
+
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+
+                    "sInfoPostFix": "",
+
+                    "sSearch": "Buscar:",
+
+                    "sUrl": "",
+
+                    "sInfoThousands": ",",
+
+                    "sLoadingRecords": "Cargando...",
+
+                    "oPaginate": {
+
+                        "sFirst": "Primero",
+
+                        "sLast": "Último",
+
+                        "sNext": "Siguiente",
+
+                        "sPrevious": "Anterior"
+
+                    },
+
+                    "oAria": {
+
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                }
+            });
+        });
+    </script>
+
+
+}
