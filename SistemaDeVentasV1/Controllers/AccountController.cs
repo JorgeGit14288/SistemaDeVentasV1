@@ -57,6 +57,11 @@ namespace SistemaDeVentasV1.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
             FacturacionDbEntities ctx = new FacturacionDbEntities();
             ViewBag.NoUsers = ctx.AspNetUsers.Count();
 
@@ -71,6 +76,7 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+          
             FacturacionDbEntities ctx = new FacturacionDbEntities();
             ViewBag.NoUsers = ctx.AspNetUsers.Count();
             if (!ModelState.IsValid)

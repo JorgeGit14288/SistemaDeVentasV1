@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity;
 
 namespace SistemaDeVentasV1.Controllers
 {
-    [Authorize(Roles = "Administrador, Bodega, Ventas")]
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -31,6 +31,10 @@ namespace SistemaDeVentasV1.Controllers
             return View();
         }
         public ActionResult Pruebas()
+        {
+            return View();
+        }
+        public ActionResult Error()
         {
             return View();
         }
