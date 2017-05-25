@@ -66,7 +66,7 @@ namespace SistemaDeVentasV1.Models
     {
         [Required]
         [EmailAddress]
-        [Display(Name = "Correo electrónico")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]

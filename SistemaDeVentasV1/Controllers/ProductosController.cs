@@ -12,6 +12,7 @@ using System.IO;
 
 namespace SistemaDeVentasV1.Controllers
 {
+    [Authorize(Roles = "Administrador, Bodega, Ventas")]
     public class ProductosController : Controller
     {
         private FacturacionDbEntities db = new FacturacionDbEntities();

@@ -10,6 +10,7 @@ using SistemaDeVentasV1.Models;
 
 namespace SistemaDeVentasV1.Controllers
 {
+    [Authorize(Roles = "Administrador, Bodega")]
     public class ProveedoresController : Controller
     {
         private FacturacionDbEntities db = new FacturacionDbEntities();

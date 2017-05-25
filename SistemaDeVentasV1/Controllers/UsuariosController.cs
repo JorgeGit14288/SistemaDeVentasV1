@@ -7,7 +7,7 @@ using SistemaDeVentasV1.Models;
 
 namespace SistemaDeVentasV1.Controllers
 {
-
+    [Authorize(Roles = "Administrador")]
     public class UsuariosController : Controller
     {
         public UsuariosController()

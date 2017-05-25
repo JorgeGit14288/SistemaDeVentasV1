@@ -11,6 +11,7 @@ using SistemaDeVentasV1.Dao;
 
 namespace SistemaDeVentasV1.Controllers
 {
+    [Authorize(Roles = "Administrador, Ventas")]
     public class FacturasController : Controller
     {
         private FacturacionDbEntities db = new FacturacionDbEntities();

@@ -3,9 +3,12 @@
 @{
     Layout = "~/Views/Shared/PlantillaLogin.cshtml";
     ViewBag.Title = "Iniciar sesión";
+
+   
+
 }
 
-<h2>@ViewBag.Title.</h2>
+<center><h3>@ViewBag.Title.</h3></center>
 <div class="row">
     <div class="col-md-12">
         <section id="loginForm">
@@ -13,10 +16,10 @@
             {
                 @Html.AntiForgeryToken()
              
-                <hr />
+         
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+                    <label class="col-md-4 control-label">Email</label>
                     <div class="col-md-8">
                         @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
@@ -38,13 +41,27 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Iniciar sesión" class="btn btn-default" />
+                    <div class="col-md-offset-2 col-md-8">
+                        <input type="submit" value="Iniciar sesión" class="btn btn-danger form-control" />
                     </div>
                 </div>
-                <p>
-                    @Html.ActionLink("Registrar como nuevo usuario", "Register")
-                </p>
+                if (Convert.ToInt32(ViewBag.NoUsers) == 0)
+                {
+                    <center>
+                        <p>
+                            <div class="col-md-offset-2 col-md-8">
+                                <a href="@Url.Action("Register","Account")" class="btn btn-success form-control" role="button">Registrar Primer Usuario</a>
+                            </div>
+</p>
+                    </center>
+                }
+                <center>
+                    <p>
+                        <label>Cuenta ejemplo</label>
+                        <br /> email: example@example.com
+                        <br />password: Example.1234
+                    </p>
+                </center>
                 @* Habilite esta opción después de habilitar la confirmación de la cuenta para la función de restablecimiento de contraseña
                     <p>
                         @Html.ActionLink("¿Ha olvidado su contraseña?", "ForgotPassword")

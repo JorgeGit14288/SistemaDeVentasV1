@@ -57,6 +57,9 @@ namespace SistemaDeVentasV1.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            FacturacionDbEntities ctx = new FacturacionDbEntities();
+            ViewBag.NoUsers = ctx.AspNetUsers.Count();
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -68,6 +71,8 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+            FacturacionDbEntities ctx = new FacturacionDbEntities();
+            ViewBag.NoUsers = ctx.AspNetUsers.Count();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -81,7 +86,7 @@ namespace SistemaDeVentasV1.Controllers
             {
                 case SignInStatus.Success:
                     //validamos antes del login si el usuario esta activo o no
-                    FacturacionDbEntities ctx = new FacturacionDbEntities();
+                    //FacturacionDbEntities ctx = new FacturacionDbEntities();
                     AspNetUsers user = ctx.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email);
                     if (user.Activo == false)
                     {
@@ -149,6 +154,8 @@ namespace SistemaDeVentasV1.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            FacturacionDbEntities ctx = new FacturacionDbEntities();
+            ViewBag.NoUsers = ctx.AspNetUsers.Count();
             return View();
         }
 
@@ -159,9 +166,35 @@ namespace SistemaDeVentasV1.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            FacturacionDbEntities ctx = new FacturacionDbEntities();
+            ViewBag.NoUsers = ctx.AspNetUsers.Count();
+       
+                if (ctx.AspNetRoles.Count() == 0)
+                {
+                    AspNetRoles rol1 = new AspNetRoles();
+                    rol1.Id = "1";
+                    rol1.Name = "Administrador";
+                    AspNetRoles rol2 = new AspNetRoles();
+                    rol2.Id = "2";
+                    rol2.Name = "Ventas";
+                    AspNetRoles rol3 = new AspNetRoles();
+                    rol3.Id = "3";
+                    rol3.Name = "Bodega";
+                    AspNetRoles rol4 = new AspNetRoles();
+                    rol4.Id = "4";
+                    rol4.Name = "Reportes";
+
+                    //agregamos los roles
+                    ctx.AspNetRoles.Add(rol1);
+                    ctx.AspNetRoles.Add(rol2);
+                    ctx.AspNetRoles.Add(rol3);
+                    ctx.AspNetRoles.Add(rol4);
+                    ctx.SaveChanges();
+                }
+            
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, nombre =model.nombre, direccion=model.direccion, PhoneNumber= model.PhoneNumber, Activo = true  };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, nombre =model.nombre, direccion=model.direccion, PhoneNumber= model.PhoneNumber, Activo = true,   };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -172,6 +205,23 @@ namespace SistemaDeVentasV1.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirmar cuenta", "Para confirmar la cuenta, haga clic <a href=\"" + callbackUrl + "\">aquí</a>");
+                    AspNetUsers usuario = new AspNetUsers();
+                    AspNetRoles rol = new AspNetRoles();
+                    if(ctx.AspNetUsers.Count()==1)
+                    {
+                        rol = ctx.AspNetRoles.Find("1");
+                        usuario = ctx.AspNetUsers.SingleOrDefault(u => u.Email == model.Email);
+                        usuario.AspNetRoles.Add(rol);
+                        ctx.SaveChanges();
+                    }
+                    else
+                    {
+                        rol = ctx.AspNetRoles.Find("4");
+                        usuario = ctx.AspNetUsers.SingleOrDefault(u => u.Email == model.Email);
+                        usuario.AspNetRoles.Add(rol);
+                        ctx.SaveChanges();
+                    }
+                    
                     Session["Usuario"] = model.nombre;
                     return RedirectToAction("Index", "Home");
                 }

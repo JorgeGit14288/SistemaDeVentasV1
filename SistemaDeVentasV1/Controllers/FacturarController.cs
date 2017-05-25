@@ -8,6 +8,7 @@ using SistemaDeVentasV1.Dao;
 
 namespace SistemaDeVentasV1.Controllers
 {
+    [Authorize(Roles = "Administrador, Ventas")]
     public class FacturarController : Controller
     {
         // objetos de acceso a datoa
