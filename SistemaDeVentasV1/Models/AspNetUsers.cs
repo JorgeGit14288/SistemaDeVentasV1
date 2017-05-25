@@ -37,6 +37,7 @@ namespace SistemaDeVentasV1.Models
         public string nombre { get; set; }
         public string direccion { get; set; }
         public string tel_casa { get; set; }
+        public Nullable<bool> Activo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AspNetUserClaims> AspNetUserClaims { get; set; }

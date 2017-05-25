@@ -58,6 +58,7 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Activo" Type="bit" />
         </EntityType>
         <EntityType Name="Categorias">
           <Key>
@@ -942,6 +943,7 @@
           <Property Name="nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="tel_casa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Activo" Type="Boolean" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="FacturacionDbModel.AspNetUsers" Role="AspNetUsers" Multiplicity="1">
@@ -1145,6 +1147,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="FacturacionDbModel.AspNetUsers">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="Activo" ColumnName="Activo" />
                 <ScalarProperty Name="tel_casa" ColumnName="tel_casa" />
                 <ScalarProperty Name="direccion" ColumnName="direccion" />
                 <ScalarProperty Name="nombre" ColumnName="nombre" />

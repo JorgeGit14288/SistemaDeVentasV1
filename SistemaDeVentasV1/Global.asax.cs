@@ -39,6 +39,9 @@ namespace SistemaDeVentasV1
             Session["idDetalleC"] = "0";
             Session["Proveedor"] = "";
 
+            //para asignar roles
+            Session["Roles"] = "";
+            Session["idUser"] = "";
         }
     }
 }

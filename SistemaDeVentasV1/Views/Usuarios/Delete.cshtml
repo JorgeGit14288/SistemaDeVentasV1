@@ -31,11 +31,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
+            @Html.DisplayNameFor(model => model.Activo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LockoutEnabled)
+            @Html.DisplayFor(model => model.Activo)
         </dd>
 
         
@@ -69,6 +69,16 @@
 
         <dd>
             @Html.DisplayFor(model => model.tel_casa)
+        </dd>
+        <dt>
+           Roles
+        </dt>
+        <dd>
+            @foreach(var r in Model.AspNetRoles)
+            {
+                @r.Name <br />
+            }
+          
         </dd>
 
     </dl>

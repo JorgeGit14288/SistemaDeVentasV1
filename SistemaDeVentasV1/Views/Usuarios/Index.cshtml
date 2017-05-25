@@ -56,10 +56,13 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.AspNetRoles)
+                    @foreach(var r in item.AspNetRoles)
+                    {
+                        @r.Name <br />
+                    }
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.LockoutEnabled)
+                    @Html.DisplayFor(modelItem => item.Activo)
                 </td>
                 <td>
                     <input type="button" class="btn btn-info" value="Detalles" onclick="location.href='@Url.Action("Details", "Usuarios", new {id = item.Id})'" />

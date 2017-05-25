@@ -72,6 +72,7 @@ namespace SistemaDeVentasV1.Controllers
             {
                 return View(model);
             }
+            
 
             // No cuenta los errores de inicio de sesión para el bloqueo de la cuenta
             // Para permitir que los errores de contraseña desencadenen el bloqueo de la cuenta, cambie a shouldLockout: true
@@ -79,6 +80,14 @@ namespace SistemaDeVentasV1.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //validamos antes del login si el usuario esta activo o no
+                    FacturacionDbEntities ctx = new FacturacionDbEntities();
+                    AspNetUsers user = ctx.AspNetUsers.SingleOrDefault(u => u.UserName == model.Email);
+                    if (user.Activo == false)
+                    {
+                        ModelState.AddModelError("", "La cuenta esta desactivada, contacte con el administrador");
+                        return View(model);
+                    }
                     Session["Usuario"] = model.Email;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
@@ -152,7 +161,7 @@ namespace SistemaDeVentasV1.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, nombre =model.nombre, direccion=model.direccion, PhoneNumber= model.PhoneNumber  };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, nombre =model.nombre, direccion=model.direccion, PhoneNumber= model.PhoneNumber, Activo = true  };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -394,7 +403,7 @@ namespace SistemaDeVentasV1.Controllers
         {
             Session["Usuario"] = "";
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

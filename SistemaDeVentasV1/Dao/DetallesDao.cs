@@ -27,7 +27,7 @@ namespace SistemaDeVentasV1.Dao
                 ctx.SaveChanges();
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
                 return false;
             }

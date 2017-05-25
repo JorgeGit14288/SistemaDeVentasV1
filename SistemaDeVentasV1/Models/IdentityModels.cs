@@ -12,6 +12,7 @@ namespace SistemaDeVentasV1.Models
         public string nombre { get; set; }
         public string direccion { get; set; }
         public string tel_casa { get; set; }
+        public bool Activo { get; set; }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Tenga en cuenta que el valor de authenticationType debe coincidir con el definido en CookieAuthenticationOptions.AuthenticationType

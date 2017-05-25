@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<SistemaDeVentasV1.Models.AspNetRoles>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/Plantilla1.cshtml";
+    ViewBag.Title = "Roles de Usuarios";
+    ViewBag.TituloControlador = "ROLES";
+    ViewBag.InfoPagina = "Gestion de Roles de Usuarios";
+    ViewBag.TituloVentana = "Roles Registrados";
+    ViewBag.FooterVentana = "No se podran eliminar algunos roles para conservar la integridad de los datos";
 }
-
-<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")

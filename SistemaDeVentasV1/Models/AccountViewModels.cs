@@ -86,8 +86,8 @@ namespace SistemaDeVentasV1.Models
         public string nombre { get; set; }
 
         [Required]
-        [DataType(DataType.Text)]
-        [Display(Name = "Direccion")]
+     
+        [DataType(DataType.PhoneNumber)]
         public string direccion { get; set; }
 
         [Required]
